@@ -35,6 +35,22 @@
           v-model="password"
         />
 
+        <input
+          type="text"
+          class="text-field"
+          name="dob"
+          placeholder="yyyy-mm-dd"
+          v-model="dob"
+        />
+
+        <input
+          type="password"
+          class="text-field"
+          name="social-last-four"
+          placeholder="Last four of social"
+          v-model="socialLastFour"
+        />
+
         <button
           type="submit"
           class="button w-full"
@@ -81,7 +97,9 @@ export default {
       billingState: "",
       billingPostalCode: "",
       billingCountry: "",
-      phoneNumber: ""
+      phoneNumber: "",
+      dob: "",
+      socialLastFour: "",
     };
   },
   watch: {

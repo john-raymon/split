@@ -18,6 +18,8 @@ const isBodyMissingProps = require('@/utils/isBodyMissingProps');
  */
 const { userPassport } = require('@/config/passport');
 
+const privacy = require('@/services/privacy');
+
 module.exports = {
   /**
    *  create a new User resource
@@ -35,6 +37,8 @@ module.exports = {
         ['billingPostalCode', 'You must provide your billing postal code.'],
         ['billingCountry', 'You must provide your billing country.'],
         ['phoneNumber', 'You must provide a phone number.'],
+        ['dob', 'You must provide your date of birth in the format yyyy-mm-dd.', true],
+        ['socialLastFour', 'You must provide the last four of your social', true],
       ];
 
       const { hasMissingProps, propErrors } = isBodyMissingProps(
@@ -60,6 +64,8 @@ module.exports = {
         billingPostalCode,
         billingCountry,
         phoneNumber,
+        dob,
+        socialLastFour,
       } = req.body;
 
       const billing = {
@@ -86,12 +92,27 @@ module.exports = {
           return count;
         })
         .then(() => {
+          // enroll on Privacy
+          return privacy.enrollUser({
+            first_name: firstName,
+            last_name: lastName,
+            email,
+            street1: billingAddressLine,
+            zipcode: billingPostalCode,
+            dob,
+            phone_number: phoneNumber,
+            ssn_last_four: socialLastFour,
+          });
+        })
+        .then((privacyRes) => {
+          debugger;
           const user = new User({
             email,
             firstName,
             lastName,
             phoneNumber,
             billingAddress: billing.address,
+            privacyAccountToken: privacyRes.data.account_token,
           });
 
           user.setPassword(password);

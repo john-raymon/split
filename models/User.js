@@ -25,6 +25,10 @@ const UserSchema = new mongoose.Schema(
       lowercase: true,
       required: [true, "is required"]
     },
+    privacyAccountToken: {
+      type: String,
+      default: ''
+    },
     lastName: {
       type: String,
       lowercase: true,
@@ -92,7 +96,8 @@ UserSchema.methods.authSerialize = function(accessToken = true) {
       return this.generateJWT();
     })(),
     billing: this.billing,
-    phoneNumber: this.phoneNumber
+    phoneNumber: this.phoneNumber,
+    privacyAccountToken: this.privacyAccountToken,
   };
 };
 
