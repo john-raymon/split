@@ -1,14 +1,25 @@
 import VueRouter from "vue-router";
+import Dashboard from "@/pages/Dashboard";
+import NewCard from "@/pages/NewCard";
 import AuthPage from "@/pages/AuthPage";
-import HomePage from "@/pages/HomePage";
 import SignInPage from "@/pages/SignInPage";
 import store from "@/vuex";
 
 const routes = [
   {
-    name: "home",
-    path: "",
-    component: HomePage
+    name: "dashboard",
+    path: "/dashboard",
+    component: Dashboard,
+    meta: {
+      requireUserAuth: true
+    },
+    children: [
+      {
+        name: "new-card",
+        path: "/card/new",
+        component: NewCard
+      }
+    ]
   },
   {
     name: "sign-up",
@@ -18,7 +29,8 @@ const routes = [
   {
     name: "sign-in",
     path: "/sign-in",
-    component: SignInPage,
+    alias: ["/"],
+    component: SignInPage
   },
   {
     name: "secure",
@@ -50,7 +62,7 @@ router.beforeEach(async (to, from, next) => {
     // if not, redirect to register/login page.
     if (!isUserAuth) {
       next({
-        name: "login",
+        name: "sign-in",
         query: { ...to.query, redirect: to.name }
       });
     } else {

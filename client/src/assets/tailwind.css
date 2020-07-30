@@ -1,6 +1,13 @@
 @tailwind base;
 
-@import url('https://fonts.googleapis.com/css?family=Michroma&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body {
+  font-family: Montserrat;
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-smooth: always;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 h1 {
   @apply text-2xl;

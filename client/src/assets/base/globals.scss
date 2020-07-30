@@ -11,9 +11,41 @@
     p-4
     tracking-wider;
   &:active, &:focus {
-    @apply border-b-2 opacity-75;
+    @apply opacity-75;
+  }
+
+  &--secondary {
+    @apply
+    outline-none
+    bg-green-600
+    rounded-full
+    text-gray-200
+    text-sm
+    font-bold
+    p-4
+    tracking-wider;
+    &:active, &:focus, &:hover {
+      @apply opacity-75;
+    }
+  }
+
+  &--red {
+    @apply
+    outline-none
+    bg-red-600
+    rounded-full
+    text-gray-200
+    text-sm
+    font-bold
+    p-4
+    tracking-wider;
+    &:active, &:focus, &:hover {
+      @apply opacity-75;
+    }
   }
 }
+
+
 
 .text-field {
   @apply block border border-gray-300 w-full p-3 rounded mb-4;

@@ -19,13 +19,7 @@
           v-model="lastName"
         />
 
-        <input
-          type="text"
-          class="text-field"
-          name="email"
-          placeholder="Email"
-          v-model="email"
-        />
+        <input type="text" class="text-field" name="email" placeholder="Email" v-model="email" />
 
         <input
           type="password"
@@ -35,13 +29,7 @@
           v-model="password"
         />
 
-        <input
-          type="text"
-          class="text-field"
-          name="dob"
-          placeholder="yyyy-mm-dd"
-          v-model="dob"
-        />
+        <input type="text" class="text-field" name="dob" placeholder="yyyy-mm-dd" v-model="dob" />
 
         <input
           type="password"
@@ -51,11 +39,7 @@
           v-model="socialLastFour"
         />
 
-        <button
-          type="submit"
-          class="button w-full"
-          @click="onSubmit"
-        >
+        <button type="submit" class="button w-full" @click="onSubmit">
           Create Account
         </button>
 
@@ -85,7 +69,7 @@ import { mapActions } from "vuex";
 
 export default {
   name: "AuthPage",
-  props: ['userAuth'],
+  props: ["userAuth"],
   data() {
     return {
       email: "",
@@ -99,14 +83,14 @@ export default {
       billingCountry: "",
       phoneNumber: "",
       dob: "",
-      socialLastFour: "",
+      socialLastFour: ""
     };
   },
   watch: {
     userAuth: {
       handler(val) {
         if (val.isAuth) {
-          const redirectRouteName = this.$route.query.redirect || "home";
+          const redirectRouteName = this.$route.query.redirect || "dashboard";
           return this.$router.push({ name: redirectRouteName, query: this.$route.query });
         }
       },
