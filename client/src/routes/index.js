@@ -9,6 +9,7 @@ const routes = [
   {
     name: "dashboard",
     path: "/dashboard",
+    alias: ["/"],
     component: Dashboard,
     meta: {
       requireUserAuth: true
