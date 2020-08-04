@@ -18,13 +18,13 @@
         & create them.
     </p>
     </div>
-    <p class="font-mont text-white text-sm text-left tracking-wider w-full self-start pt-4">
+    <p class="font-mont text-white text-sm text-left tracking-wider w-full self-start pt-4 mb-2">
     Create debit cards for specific spending,
     like a card locked to <span class="text-red-600">Netflix</span> or the <span class="text-blue-600">Playstation Network</span> with a set monthly limit.
     </p>
-    <button type="submit" class="mt-4 bg-green-400 text-green-800 rounded-full px-3 py-2 text-xs focus:outline-none">
+    <router-link to="/sign-up" class="bg-green-400 text-green-800 rounded-full px-3 py-2 text-xs focus:outline-none">
       Sign up now for early access
-    </button>
+    </router-link>
   </div>
 </template>
 <script>
