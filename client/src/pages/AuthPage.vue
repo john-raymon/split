@@ -1,6 +1,6 @@
 <template>
-  <div class="py-5 self-center w-full flex items-center flex-col">
-    <div class="container max-w-md mx-auto flex-1 flex flex-col items-center justify-center px-2">
+  <div class="py-5 w-full flex items-center flex-col">
+    <div class="container max-w-md mx-auto flex-1 flex flex-col items-center justify-start px-2">
       <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
         <h1 class="tracking-wide pb-8 text-center text-gray-800">Sign up for early access</h1>
         <input

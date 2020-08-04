@@ -1,8 +1,8 @@
 <template>
   <div class="homepage">
     <div class="homepage__hero relative flex flex-col justify-center">
-      <div class="w-3/4 self-end max-w-sm">
-        <img src="./../assets/media/marketing-site-hero.png" />
+      <div class="w-1/2 self-end max-w-sm pointer-events-none">
+        <img class="pointer-events-none" src="./../assets/media/marketing-site-hero.png" />
       </div>
       <p class="absolute font-mont font-medium text-white mb-2 text-base sm:mb-20 lg:mb-0 md:text-2xl text-left tracking-wide w-3/4 self-start pr-8">
         <span class="font-bold">
@@ -18,7 +18,7 @@
         & create them.
     </p>
     </div>
-    <p class="font-mont text-white text-sm text-left tracking-wider w-full self-start pt-4 mb-2">
+    <p class="font-mont text-white text-sm text-left tracking-wider w-full self-start pt-4 mb-6">
     Create debit cards for specific spending,
     like a card locked to <span class="text-red-600">Netflix</span> or the <span class="text-blue-600">Playstation Network</span> with a set monthly limit.
     </p>
