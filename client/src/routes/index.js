@@ -3,13 +3,21 @@ import Dashboard from "@/pages/Dashboard";
 import NewCard from "@/pages/NewCard";
 import AuthPage from "@/pages/AuthPage";
 import SignInPage from "@/pages/SignInPage";
+import HomePage from '@/pages/HomePage';
 import store from "@/vuex";
 
 const routes = [
   {
+    name: "home",
+    path: "/",
+    component: HomePage,
+    meta: {
+      layout: 'dark-layout',
+    },
+  },
+  {
     name: "dashboard",
     path: "/dashboard",
-    alias: ["/"],
     component: Dashboard,
     meta: {
       requireUserAuth: true

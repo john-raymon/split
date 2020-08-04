@@ -63,10 +63,6 @@ export default {
 };
 </script>
 <style lang="scss">
-html,
-body {
-  @apply bg-gray-100;
-}
 .default-layout {
   @apply h-full font-mont max-w-screen-lg mx-auto px-2 bg-gray-100;
   .main {

@@ -62,7 +62,7 @@
       <div class="flex flex-col space-y-2 pb-4">
         <label for="card-spending-limit-duration text-md">Spending limit duration:</label>
 
-        <select class="block bg-transparent card-spending-limit-duration flex p-2 text-white outline-none border-b border-gray-200" name="card-spending-limit-duration" id="card-spending-limit-duration">
+        <select class="block rounded-none bg-transparent card-spending-limit-duration flex p-2 text-white outline-none border-b border-gray-200" name="card-spending-limit-duration" id="card-spending-limit-duration">
           <option value="">--Select limit duration--</option>
           <option value="TRANSACTION">Limit per transaction</option>
           <option value="MONTHLY">Limit monthly</option>
@@ -71,11 +71,11 @@
         </select>
       </div>
 
-      <div class="card-form__controls flex justify-between space-x-2 pb-8 max-w-md">
-        <button @click="() => $router.push({ name: 'dashboard' })" type="submit" class="button--red w-1/2 rounded-md self-end bg-red-300">
+      <div class="card-form__controls flex justify-between flex-wrap space-x-2 pb-8 max-w-md">
+        <button @click="() => $router.push({ name: 'dashboard' })" type="submit" class="button--red flex-grow rounded-md self-end bg-red-300">
           Cancel
         </button>
-        <button type="submit" class="button--secondary w-1/2 rounded-md self-end">
+        <button type="submit" class="button--secondary flex-grow rounded-md self-end">
           Create card
         </button>
       </div>
