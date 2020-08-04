@@ -1,10 +1,13 @@
 <template>
   <div class="dark-layout">
     <section class="dark-layout__inner">
-      <header class="w-full pt-20 flex flex-col pb-8">
+      <header class="w-full pt-20 pb-16 flex items-center justify-between pb-8">
         <div class="w-24 h-auto">
           <Logo />
         </div>
+        <button type="submit" class="bg-green-400 text-green-800 rounded-full px-3 py-2 text-xs focus:outline-none">
+          Sign up now for early access
+        </button>
       </header>
       <main class="main">
         <slot />
@@ -25,7 +28,7 @@ export default {
 </script>
 <style lang="scss">
   .dark-layout {
-    @apply relative font-mont w-full bg-black px-8;
+    @apply relative font-mont w-full bg-black px-6;
     &__inner {
       @apply max-w-screen-lg mx-auto;
     }
