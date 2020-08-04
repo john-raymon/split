@@ -1,7 +1,7 @@
 <template>
   <div class="dark-layout">
     <section class="dark-layout__inner">
-      <header class="w-full pt-20 pb-16 flex items-center justify-between pb-8">
+      <header class="w-full py-16 flex items-center justify-between">
         <router-link to="/" class="w-24 h-auto">
           <Logo />
         </router-link>
