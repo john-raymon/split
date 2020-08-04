@@ -19,7 +19,7 @@
         </button>
       </div>
 
-      <div class="text-gray-dark mt-6 tracking-wider text-sm">
+      <div class="mt-6 tracking-wider text-white text-sm">
         Don't have an account?
         <router-link class="no-underline border-b border-blue-500 text-blue-500" to="/sign-up">
           Sign up here

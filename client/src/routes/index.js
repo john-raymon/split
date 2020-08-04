@@ -33,13 +33,18 @@ const routes = [
   {
     name: "sign-up",
     path: "/sign-up",
-    component: AuthPage
+    component: AuthPage,
+    meta: {
+      layout: 'dark-layout',
+    },
   },
   {
     name: "sign-in",
     path: "/sign-in",
-    alias: ["/"],
-    component: SignInPage
+    component: SignInPage,
+    meta: {
+      layout: 'dark-layout',
+    },
   },
   {
     name: "secure",

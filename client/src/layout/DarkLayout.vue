@@ -2,12 +2,15 @@
   <div class="dark-layout">
     <section class="dark-layout__inner">
       <header class="w-full pt-20 pb-16 flex items-center justify-between pb-8">
-        <div class="w-24 h-auto">
+        <router-link to="/" class="w-24 h-auto">
           <Logo />
-        </div>
-        <button type="submit" class="bg-green-400 text-green-800 rounded-full px-3 py-2 text-xs focus:outline-none">
+        </router-link>
+        <router-link v-if="$route.name !== 'sign-up'" to="/sign-up" type="submit" class="bg-green-400 text-green-800 rounded-full px-3 py-2 text-xs focus:outline-none">
           Sign up now for early access
-        </button>
+        </router-link>
+        <router-link v-else type="submit" to="/sign-in" class="bg-green-400 text-green-800 rounded-full px-3 py-2 text-xs focus:outline-none">
+          Sign in to your account
+        </router-link>
       </header>
       <main class="main">
         <slot />

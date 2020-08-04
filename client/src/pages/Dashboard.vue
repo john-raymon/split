@@ -1,6 +1,7 @@
 <template>
   <div class="dashboard">
     <router-link
+      v-if="false"
       :to="{ name: 'new-card' }"
       class="my-4 hover:text-gray-400 p-1 flex justify-between text-gray-500 text-sm fill-current items-center"
     >

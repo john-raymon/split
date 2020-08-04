@@ -1,9 +1,9 @@
 <template>
   <div class="default-layout px-8">
     <header class="w-full pt-20 flex flex-col border-b border-gray-300 pb-8">
-      <div class="w-24 h-auto">
+      <router-link to="/" class="w-24 h-auto">
         <Logo />
-      </div>
+      </router-link>
       <div v-if="userAuth.isAuth" class="mt-16 flex justify-between items-center">
         <h1 class="text-gray-700 text-3xl">
           <span class="text-indigo-800 font-black">
@@ -15,7 +15,7 @@
         <ul class="text-xs text-right text-gray-500 tracking-widest font-bold">
           <template v-if="userAuth.isAuth">
             <li>
-              <router-link to="/secure">
+              <router-link to="">
                 Account Settings
               </router-link>
             </li>

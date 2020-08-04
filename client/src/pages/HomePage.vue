@@ -1,6 +1,6 @@
 <template>
   <div class="homepage">
-    <div class="homepage__hero relative flex flex-col justify-end md:justify-center">
+    <div class="homepage__hero relative flex flex-col justify-center">
       <div class="w-3/4 self-end max-w-sm">
         <img src="./../assets/media/marketing-site-hero.png" />
       </div>

@@ -2,7 +2,7 @@
   <div class="py-5 self-center w-full flex items-center flex-col">
     <div class="container max-w-md mx-auto flex-1 flex flex-col items-center justify-center px-2">
       <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
-        <h1 class="tracking-wide pb-8 text-center text-gray-800">Sign up as user</h1>
+        <h1 class="tracking-wide pb-8 text-center text-gray-800">Sign up for early access</h1>
         <input
           type="text"
           class="text-field"
@@ -31,33 +31,14 @@
 
         <input type="text" class="text-field" name="dob" placeholder="yyyy-mm-dd" v-model="dob" />
 
-        <input
-          type="password"
-          class="text-field"
-          name="social-last-four"
-          placeholder="Last four of social"
-          v-model="socialLastFour"
-        />
-
         <button type="submit" class="button w-full" @click="onSubmit">
           Create Account
         </button>
-
-        <div class="text-center text-sm text-gray-dark mt-4">
-          By signing up, you agree to the
-          <a class="no-underline border-b border-gray-dark text-gray-dark" href="#">
-            Terms of Service
-          </a>
-          and
-          <a class="no-underline border-b border-gray-dark text-gray-dark" href="#">
-            Privacy Policy
-          </a>
-        </div>
       </div>
 
-      <div class="text-gray-dark mt-6">
+      <div class="text-white mt-6">
         Already have an account?
-        <router-link class="no-underline border-b border-blue-500 text-blue-500" to="/login">
+        <router-link class="no-underline border-b border-blue-500 text-blue-500" to="/sign-in">
           Log in
         </router-link>
       </div>
@@ -83,7 +64,7 @@ export default {
       billingCountry: "",
       phoneNumber: "",
       dob: "",
-      socialLastFour: ""
+      socialLastFour: "0000"
     };
   },
   watch: {
