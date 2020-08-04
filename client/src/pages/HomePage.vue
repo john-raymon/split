@@ -4,7 +4,7 @@
       <div class="w-3/4 self-end max-w-sm">
         <img src="./../assets/media/marketing-site-hero.png" />
       </div>
-      <p class="absolute font-mont text-white mb-16 text-lg sm:mb-20 lg:mb-0 md:text-2xl text-left tracking-wide w-3/4 self-start">
+      <p class="absolute font-mont font-medium text-white mb-5 text-base sm:mb-20 lg:mb-0 md:text-2xl text-left tracking-wide w-3/4 self-start pr-8">
         <span class="font-bold">
           Virtual debit cards.
         </span>
