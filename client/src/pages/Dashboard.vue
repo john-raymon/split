@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <p class="font-mont font-bold max-w-lg font-medium text-indigo-900 text-2xl text-left tracking-wide py-10">
+    <p class="font-mont font-bold max-w-lg font-medium text-indigo-900 text-lg md:text-2xl text-left py-10">
       You’re in! Welcome
       to your Split dashboard.
       <br/>
