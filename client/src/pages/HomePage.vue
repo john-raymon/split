@@ -25,7 +25,7 @@
       <div class="w-full overflow-hidden h-auto py-6">
         <img class="pointer-events-none" src="./../assets/media/split-screenshot-2.png" />
       </div>
-      <div class="md:order-first space-y-6 w-3/4">
+      <div class="md:order-first space-y-6 md:w-3/4">
         <p class="font-mont text-white text-md text-left tracking-wider self-start">
         Create cards for your own specific spending, (like Netflix, Uber, or even the Playstation network).
         </p>
