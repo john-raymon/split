@@ -16,15 +16,32 @@
         when you can
         customize, control,
         & create them.
+        <span class="block text-sm text-gray-500 pt-2">
+          Learn more below.
+        </span>
     </p>
     </div>
-    <p class="font-mont text-white text-sm text-left tracking-wider w-full self-start pt-4 mb-6">
-    Create debit cards for specific spending,
-    like a card locked to <span class="text-red-600">Netflix</span> or the <span class="text-blue-600">Playstation Network</span> with a set monthly limit.
-    </p>
-    <router-link to="/sign-up" class="bg-green-400 text-green-800 rounded-full px-3 py-2 text-xs focus:outline-none">
-      Sign up now for early access
-    </router-link>
+    <div class="flex flex-col md:flex-row items-center py-8">
+      <div class="w-full overflow-hidden h-auto py-6">
+        <img class="pointer-events-none" src="./../assets/media/split-screenshot-2.png" />
+      </div>
+      <div class="md:order-first space-y-6 w-3/4">
+        <p class="font-mont text-white text-md text-left tracking-wider self-start">
+        Create cards for your own specific spending, (like Netflix, Uber, or even the Playstation network).
+        </p>
+
+        <p class="font-mont text-white text-md text-left tracking-wider self-start">
+          How is this useful?
+          <br/>
+          If you ever find yourself second-guessing sharing your debit card’s information, whether with your children or an online business, just create a virtual card and share that instead.
+        </p>
+        <div>
+          <router-link to="/sign-up" class="bg-green-400 text-green-800 rounded-full px-3 py-2 text-xs focus:outline-none">
+            Sign up now for early access
+          </router-link>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -35,6 +52,6 @@ export default {
 </script>
 <style lang="scss">
 .homepage {
-  @apply w-full h-auto;
+  @apply w-full h-auto mb-10;
 }
 </style>

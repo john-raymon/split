@@ -1,6 +1,6 @@
 <template>
   <div class="default-layout px-8">
-    <header class="w-full pt-20 flex flex-col border-b border-gray-300 pb-8">
+    <header class="w-full pt-20 flex flex-col border-b border-indigo-200 pb-8">
       <router-link to="/" class="w-24 h-auto">
         <Logo />
       </router-link>
@@ -43,7 +43,7 @@
     <main class="main">
       <slot />
     </main>
-    <footer class="w-full flex justify-center text-gray-800 text-xs tracking-widest py-10">
+    <footer class="w-full flex justify-center text-gray-800 text-xs tracking-widest py-6">
       <a href="https://github.com/dreamineers" target="_blank">
         Powered by Dreamineers Inc.
       </a>
@@ -63,11 +63,14 @@ export default {
 };
 </script>
 <style lang="scss">
+html, body {
+  @apply bg-gray-100;
+}
 .default-layout {
   @apply h-full font-mont max-w-screen-lg mx-auto px-2 bg-gray-100;
   .main {
     @apply flex;
-    min-height: calc(100vh - 6.25rem); // 6.25rem is the height of the footer in this layout
+    min-height: 100vh; // 6.25rem is the height of the footer in this layout
   }
 }
 </style>
