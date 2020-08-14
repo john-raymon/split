@@ -1,28 +1,22 @@
 <template>
   <div class="dashboard">
-    <router-link
-      v-if="false"
-      :to="{ name: 'new-card' }"
-      class="my-4 hover:text-gray-400 p-1 flex justify-between text-gray-500 text-sm fill-current items-center"
-    >
-      <XSvg class="w-3 text-gray-600 mr-2" />
-      Create a new card
-    </router-link>
-    <router-view />
+    <p class="font-mont font-bold max-w-lg font-medium text-indigo-900 text-2xl text-left tracking-wide py-10">
+      You’re in! Welcome
+      to your Split dashboard.
+      <br/>
+      <br/>
+      Soon you’ll be able to create
+      up to 5 virtual debit cards linked to your bank account or debit card.
+      <br/>
+      <br/>
+      We’ll email updates on your early access soon.
+    </p>
   </div>
 </template>
 <script>
-import XSvg from "@/assets/svgs/x.svg";
 
 export default {
   name: "Dashboard",
-  components: {
-    XSvg
-  }
 };
 </script>
-<style lang="scss">
-.dashboard {
-  max-height: 80vh;
-}
-</style>
+
