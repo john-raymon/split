@@ -15,7 +15,6 @@ router.use('/users', require('./users'));
  * otherwise calls next error handler in stack
  */
 router.use(function(err, req, res, next) {
-  debugger;
   /**
    * if no error is caught above,
    * then pass below, which then goes
