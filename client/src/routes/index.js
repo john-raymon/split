@@ -3,7 +3,8 @@ import Dashboard from "@/pages/Dashboard";
 import NewCard from "@/pages/NewCard";
 import AuthPage from "@/pages/AuthPage";
 import SignInPage from "@/pages/SignInPage";
-import HomePage from '@/pages/HomePage';
+import HomePage from "@/pages/HomePage";
+import AddFundingAccount from "@/pages/AddFundingAccount";
 import store from "@/vuex";
 
 const routes = [
@@ -12,8 +13,8 @@ const routes = [
     path: "/",
     component: HomePage,
     meta: {
-      layout: 'dark-layout',
-    },
+      layout: "dark-layout"
+    }
   },
   {
     name: "dashboard",
@@ -25,8 +26,13 @@ const routes = [
     children: [
       {
         name: "new-card",
-        path: "/card/new",
+        path: "card/new",
         component: NewCard
+      },
+      {
+        name: "add-funding-bank-account",
+        path: "funding/add",
+        component: AddFundingAccount
       }
     ]
   },
@@ -35,16 +41,16 @@ const routes = [
     path: "/sign-up",
     component: AuthPage,
     meta: {
-      layout: 'dark-layout',
-    },
+      layout: "dark-layout"
+    }
   },
   {
     name: "sign-in",
     path: "/sign-in",
     component: SignInPage,
     meta: {
-      layout: 'dark-layout',
-    },
+      layout: "dark-layout"
+    }
   },
   {
     name: "secure",

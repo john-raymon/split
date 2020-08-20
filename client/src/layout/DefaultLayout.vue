@@ -63,7 +63,8 @@ export default {
 };
 </script>
 <style lang="scss">
-html, body {
+html,
+body {
   @apply bg-gray-100;
 }
 .default-layout {

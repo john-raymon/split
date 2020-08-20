@@ -4,22 +4,32 @@
       <p class="text-white text-3xl font-bold">
         How would you like to fund this card?
         <span class="block text-sm tracking-wide font-light text-gray-400 pt-2">
-          This funding account will only be charged
-          for payments made on your Split virtual cards.
+          This funding account will only be charged for payments made on your Split virtual cards.
         </span>
       </p>
       <!-- render select with list of options with funding account token values-->
       <p class="text-sm font-bold py-2 text-white">
         or
       </p>
-      <router-link to="/funding-account/new" class="border-b border-gray-400 text-gray-400 text-sm">
+      <router-link
+        to="/dashboard/funding/add"
+        class="border-b border-gray-400 text-gray-400 text-sm"
+      >
         Click here to add a new funding account
       </router-link>
       <div class="card-form__controls flex justify-between space-x-2 py-4 max-w-md">
-        <button @click="() => $router.push({ name: 'dashboard' })" type="submit" class="button--red w-1/2 rounded-md self-end bg-red-300">
+        <button
+          @click="() => $router.push({ name: 'dashboard' })"
+          type="submit"
+          class="button--red w-1/2 rounded-md self-end bg-red-300"
+        >
           Cancel
         </button>
-        <button @click="() => $data.fundingAccountToken = true" type="submit" class="button--secondary w-1/2 rounded-md self-end">
+        <button
+          @click="() => ($data.fundingAccountToken = true)"
+          type="submit"
+          class="button--secondary w-1/2 rounded-md self-end"
+        >
           Continue
         </button>
       </div>
@@ -62,7 +72,11 @@
       <div class="flex flex-col space-y-2 pb-4">
         <label for="card-spending-limit-duration text-md">Spending limit duration:</label>
 
-        <select class="block rounded-none bg-transparent card-spending-limit-duration flex p-2 text-white outline-none border-b border-gray-200" name="card-spending-limit-duration" id="card-spending-limit-duration">
+        <select
+          class="block rounded-none bg-transparent card-spending-limit-duration flex p-2 text-white outline-none border-b border-gray-200"
+          name="card-spending-limit-duration"
+          id="card-spending-limit-duration"
+        >
           <option value="">--Select limit duration--</option>
           <option value="TRANSACTION">Limit per transaction</option>
           <option value="MONTHLY">Limit monthly</option>
@@ -72,7 +86,11 @@
       </div>
 
       <div class="card-form__controls flex justify-between flex-wrap space-x-2 pb-8 max-w-md">
-        <button @click="() => $router.push({ name: 'dashboard' })" type="submit" class="button--red flex-grow rounded-md self-end bg-red-300">
+        <button
+          @click="() => $router.push({ name: 'dashboard' })"
+          type="submit"
+          class="button--red flex-grow rounded-md self-end bg-red-300"
+        >
           Cancel
         </button>
         <button type="submit" class="button--secondary flex-grow rounded-md self-end">
@@ -84,12 +102,15 @@
 </template>
 <script>
 import { VMoney } from "v-money";
-
+/**
+ * create new virtual card resource form
+ * makes a request to the back-end, creating a new virtual card
+ */
 export default {
   name: "NewCard",
   data() {
     return {
-      fundingAccountToken: '',
+      fundingAccountToken: "",
       money: {
         prefix: "$",
         suffix: "",
