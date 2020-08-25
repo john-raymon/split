@@ -27,6 +27,9 @@
     &:active, &:focus, &:hover {
       @apply opacity-75;
     }
+    &:disabled {
+      @apply opacity-25;
+    }
   }
 
   &--red {

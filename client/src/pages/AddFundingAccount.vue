@@ -101,7 +101,6 @@ export default {
 
 <style scoped lang="scss">
 .funding-account {
-  @apply fixed w-full transition delay-300 font-mont bg-white bottom-0 left-0 pt-12 pl-10 pr-20;
-  height: 80%;
+  @apply fixed w-full h-full transition delay-300 font-mont bg-white bottom-0 left-0 pt-12 pl-10 pr-20;
 }
 </style>
