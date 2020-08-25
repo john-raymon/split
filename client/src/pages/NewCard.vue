@@ -6,7 +6,10 @@
         <span class="block text-sm tracking-wide font-light text-gray-800 pt-2">
           This funding account will only be charged for payments made on your Split virtual cards.
         </span>
-        <select class="mt-2 w-full bg-white text-gray-800 appearance-none rounded p-2 border border-gray-400 outline-none" @change="handleFundingSourceChange">
+        <select
+          v-model="fundingAccountToken"
+          class="mt-2 text-sm  w-full bg-white text-gray-800 appearance-none rounded p-2 border border-gray-400 outline-none"
+        >
           <option value="" selected>
             Select an account
           </option>
@@ -16,9 +19,8 @@
             :value="account.token"
           >
             {{
-              `${account.last_four}${account.account_name && ` - ${account.account_name}`} - ${
-                account.type
-              }`
+              `Acct *${account.last_four}${account.account_name &&
+                ` - ${account.account_name}`} - ${account.type}`
             }}
           </option>
         </select>
@@ -51,14 +53,25 @@
         </button>
       </div>
     </div>
-    <form v-else class="text-gray-400 space-y-5 max-h-full max-w-md mx-auto" @submit.prevent>
-      <p class="text-white text-3xl mb-4 font-bold">
+    <form v-else class="text-gray-800 space-y-5 max-h-full max-w-md mx-auto" @submit.prevent>
+      <p class="text-black text-3xl mb-4 font-bold">
         Create a card:
       </p>
 
       <div>
-        <div class="space-x-2 text-white text-sm">
+        <div class="card-spend-limit flex flex-col">
+          <label class="text-md" for="spend-limit">What's this card for? (memo):</label>
           <input
+            class="outline-none text-black text-xl bg-transparent appearance-none mb-4 border-b border-color-500"
+            name="card-memo"
+            type="text"
+            v-model="memo"
+            placeholder="Card memo"
+          />
+        </div>
+        <div class="space-x-2 text-black text-sm">
+          <input
+            v-model="cardType"
             type="radio"
             id="MERCHANT_LOCKED"
             name="card-type"
@@ -68,20 +81,26 @@
           <label class="cursor-pointer" for="MERCHANT_LOCKED">Lock this card to a merchant</label>
         </div>
 
-        <div class="space-x-2 text-white text-sm">
-          <input type="radio" id="SINGLE_USE" name="card-type" value="SINGLE_USE" />
+        <div class="space-x-2 text-black text-sm">
+          <input
+            v-model="cardType"
+            type="radio"
+            id="SINGLE_USE"
+            name="card-type"
+            value="SINGLE_USE"
+          />
           <label class="cursor-pointer" for="SINGLE_USE">Make this a single-use card</label>
         </div>
       </div>
 
       <div class="card-spend-limit flex flex-col">
         <label class="text-md" for="spend-limit">Spending limit amount:</label>
-        <input
+        <money
           class="outline-none text-indigo-500 text-6xl md:text-8xl bg-transparent appearance-none"
           name="card-spend-limit"
-          v-money="money"
+          v-bind="money"
           id="spend-limit"
-          value="0"
+          v-model="spendLimit"
         />
         <span>(USD)</span>
       </div>
@@ -90,7 +109,8 @@
         <label for="card-spending-limit-duration text-md">Spending limit duration:</label>
 
         <select
-          class="block rounded-none bg-transparent card-spending-limit-duration flex p-2 text-white outline-none border-b border-gray-200"
+          v-model="spendingLimitDuration"
+          class="block rounded-none bg-transparent card-spending-limit-duration flex p-2 text-black outline-none border-b border-gray-200"
           name="card-spending-limit-duration"
           id="card-spending-limit-duration"
         >
@@ -110,7 +130,11 @@
         >
           Cancel
         </button>
-        <button type="submit" class="button--secondary flex-grow rounded-md self-end">
+        <button
+          @click="handleCreateCardSubmit"
+          type="submit"
+          class="button--secondary flex-grow rounded-md self-end"
+        >
           Create card
         </button>
       </div>
@@ -118,7 +142,7 @@
   </div>
 </template>
 <script>
-import { VMoney } from "v-money";
+import { Money } from "v-money";
 import { mapState } from "vuex";
 
 /**
@@ -127,9 +151,16 @@ import { mapState } from "vuex";
  */
 export default {
   name: "NewCard",
+  components: {
+    Money
+  },
   data() {
     return {
+      spendLimit: "",
+      memo: "",
+      cardType: "",
       fundingAccountToken: "",
+      spendingLimitDuration: "",
       fundingAccountTokenSelected: false,
       money: {
         prefix: "$",
@@ -139,9 +170,6 @@ export default {
       }
     };
   },
-  directives: {
-    money: VMoney
-  },
   computed: {
     ...mapState(["fundingSources"]),
     enabledFundingSource() {
@@ -149,15 +177,31 @@ export default {
     }
   },
   methods: {
-    handleFundingSourceChange(e) {
-      this.fundingAccountToken = e.target.value;
+    handleCreateCardSubmit() {
+      this.$http
+        ._post("/users/cards", {
+          funding_token: this.fundingAccountToken,
+          spend_limit_duration: this.spendingLimitDuration,
+          type: this.cardType,
+          memo: this.memo,
+          spend_limit: this.spendLimit * 100
+        })
+        .then(body => {
+          alert(JSON.stringify(body));
+        })
+        .catch(err => {
+          if (err.response) {
+            console.log("Error when attempting to add a funding bank account", err, err.response);
+            return alert(JSON.stringify(err.response.data));
+          }
+        });
     }
-  },
+  }
 };
 </script>
 
 <style scoped lang="scss">
-  .new-card-container {
-    @apply fixed w-full transition delay-300 font-mont text-black h-full bg-white bottom-0 left-0 pt-12 pl-10 pr-12;
-  }
+.new-card-container {
+  @apply fixed w-full transition delay-300 font-mont text-black h-full bg-white bottom-0 left-0 pt-12 pl-10 pr-12;
+}
 </style>

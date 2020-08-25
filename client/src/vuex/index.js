@@ -6,7 +6,9 @@ import Agent from "@/plugins/agents";
 Vue.use(Vuex);
 
 // persist user state across refreshes and what-not
-const persist = new VuexPersistence();
+const persist = new VuexPersistence({
+  reducer: state => ({ userAuth: state.userAuth })
+});
 
 export default new Vuex.Store({
   state: {
@@ -14,7 +16,13 @@ export default new Vuex.Store({
       isAuth: false,
       user: null
     },
-    fundingSources: []
+    fundingSources: [],
+    virtualDebitCards: {
+      data: [],
+      page: 1,
+      total_entries: 0,
+      total_pages: 0,
+    },
   },
   mutations: {
     setUserAuth(state, userAuth) {
@@ -28,7 +36,12 @@ export default new Vuex.Store({
     },
     setFundingSources(state, fundingSources) {
       state.fundingSources = fundingSources;
-    }
+    },
+    setVirtualDebitCards(state, payload) {
+      debugger;
+      state.virtualDebitCards = payload;
+      debugger;
+    },
   },
   actions: {
     updateUserAuth(context, authData) {
@@ -41,9 +54,7 @@ export default new Vuex.Store({
     },
     fetchFundingSources(context, userAgent) {
       userAgent
-        ._get(
-          `/users/fundingsources?account_token=${context.state.userAuth.user.privacyAccountToken}`
-        )
+        ._get(`/users/fundingsources`)
         .then(body => {
           context.commit("setFundingSources", body.fundingSources);
         })
@@ -51,7 +62,19 @@ export default new Vuex.Store({
           console.log("there was an error while dispatching the fetchFundingSources action");
           throw err;
         });
-    }
+    },
+    fetchVirtualDebitCards(context, userAgent) {
+      userAgent
+        ._get(`/users/cards`)
+        .then(body => {
+          debugger;
+          context.commit("setVirtualDebitCards", body);
+        })
+        .catch(err => {
+          console.log("there was an error while dispatching the fetchVirtualDebitCards action");
+          throw err;
+        });
+    },
   },
   plugins: [persist.plugin]
 });

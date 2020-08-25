@@ -20,13 +20,14 @@ export default {
       handler: function(userAuth) {
         if (userAuth.isAuth) {
           this.fetchFundingSources(this.$http);
+          this.fetchVirtualDebitCards(this.$http);
         }
       },
       immediate: true
     }
   },
   methods: {
-    ...mapActions(["logout", "fetchFundingSources"]),
+    ...mapActions(["logout", "fetchFundingSources", "fetchVirtualDebitCards"]),
     handleLogout() {
       this.logout().then(() => {
         this.$nextTick().then(() => {

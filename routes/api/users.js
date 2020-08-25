@@ -34,4 +34,31 @@ router.get('/fundingsources', middleware.requireAuthUser, function(req, res, nex
     .catch((error) => { next(error); });
 })
 
+
+router.post('/cards', middleware.requireAuthUser, function(req, res, next) {
+  const { memo, type, funding_token, state, spend_limit, spend_limit_duration } = req.body;
+  return privacyService.createVirtualDebitCard({
+    memo,
+    type,
+    funding_token,
+    state,
+    spend_limit,
+    spend_limit_duration,
+  },
+    req.authUser.privacyAccountToken,
+  )
+    .then((virtualCard) => res.json({
+      virtualCard
+    }))
+    .catch((error) => { next(error); });
+})
+
+router.get('/cards', middleware.requireAuthUser, function(req, res, next) {
+  return privacyService.listVirtualDebitCards(
+    req.authUser.privacyAccountToken,
+  )
+    .then(body => { return res.json(body); })
+    .catch((error) => { next(error); });
+})
+
 module.exports = router;

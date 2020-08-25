@@ -12,6 +12,47 @@ const privacyApiKey = config.get('privacy.apiKey');
 const privacyUrl = config.get('privacy.url');
 
 module.exports = {
+  listVirtualDebitCards(accountToken) {
+    return new Promise((resolve, reject) => {
+      request(
+        {
+          url: `${privacyUrl}card?account_token=${accountToken}`,
+          method: "get",
+          headers: {
+            "Authorization": `api-key ${privacyApiKey}`
+          },
+          json: true,
+        },
+        function(err, response, body) {
+          if ((err || body.error) || response.statusCode !== 200) {
+            reject((err || body.error) || body);
+          }
+          resolve(body);
+        }
+      );
+    });
+  },
+  createVirtualDebitCard(cardData, accountToken) {
+    return new Promise((resolve, reject) => {
+      request(
+        {
+          url: `${privacyUrl}card?account_token=${accountToken}`,
+          method: "POST",
+          headers: {
+            "Authorization": `api-key ${privacyApiKey}`
+          },
+          json: true,
+          body: cardData,
+        },
+        function(err, response, body) {
+          if ((err || body.error) || response.statusCode !== 200) {
+            reject((err || body.error) || body);
+          }
+          resolve(body);
+        }
+      );
+    });
+  },
   /**
    * Makes Privacy API request adding a funding bank account for the user
    * @param {Object} bankData
