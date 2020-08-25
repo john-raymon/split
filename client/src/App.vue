@@ -15,8 +15,18 @@ export default {
     },
     ...mapState(["userAuth"])
   },
+  watch: {
+    userAuth: {
+      handler: function(userAuth) {
+        if (userAuth.isAuth) {
+          this.fetchFundingSources(this.$http);
+        }
+      },
+      immediate: true
+    }
+  },
   methods: {
-    ...mapActions(["logout"]),
+    ...mapActions(["logout", "fetchFundingSources"]),
     handleLogout() {
       this.logout().then(() => {
         this.$nextTick().then(() => {

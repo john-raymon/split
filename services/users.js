@@ -106,7 +106,6 @@ module.exports = {
           });
         })
         .then((privacyRes) => {
-          debugger;
           const user = new User({
             email,
             firstName,
@@ -123,10 +122,8 @@ module.exports = {
               // send welcome email using mailgun service sendWelcomeEmail()
               return mailgun.sendWelcomeEmail(user.email, 'You\'re in!', user.firstName)
                 .then((res) => {
-                  debugger;
                 })
                 .catch((error) => {
-                  debugger;
                 })
                 .finally(() => {
                   return res.json({ success: true, user: user.authSerialize() });

@@ -5,7 +5,7 @@ import Agent from "@/plugins/agents";
 
 Vue.use(Vuex);
 
-// persist user state accross refreshes and what-not
+// persist user state across refreshes and what-not
 const persist = new VuexPersistence();
 
 export default new Vuex.Store({
@@ -13,7 +13,8 @@ export default new Vuex.Store({
     userAuth: {
       isAuth: false,
       user: null
-    }
+    },
+    fundingSources: []
   },
   mutations: {
     setUserAuth(state, userAuth) {
@@ -24,6 +25,9 @@ export default new Vuex.Store({
         isAuth: false,
         user: null
       };
+    },
+    setFundingSources(state, fundingSources) {
+      state.fundingSources = fundingSources;
     }
   },
   actions: {
@@ -34,6 +38,19 @@ export default new Vuex.Store({
       // clear jwt from localforage
       Agent.setToken("");
       return context.commit("resetAuth");
+    },
+    fetchFundingSources(context, userAgent) {
+      userAgent
+        ._get(
+          `/users/fundingsources?account_token=${context.state.userAuth.user.privacyAccountToken}`
+        )
+        .then(body => {
+          context.commit("setFundingSources", body.fundingSources);
+        })
+        .catch(err => {
+          console.log("there was an error while dispatching the fetchFundingSources action");
+          throw err;
+        });
     }
   },
   plugins: [persist.plugin]

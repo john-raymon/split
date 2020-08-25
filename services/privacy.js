@@ -33,11 +33,30 @@ module.exports = {
           if ((err || body.error) || response.statusCode !== 200) {
             reject((err || body.error) || body);
           }
-          debugger;
           resolve(body);
         }
       );
     });
+  },
+  getAllFundingSources(queryData) {
+    return new Promise((resolve, reject) => {
+        request(
+          {
+            url: `${privacyUrl}fundingsource?account_token=${queryData.account_token || ''}`,
+            method: "GET",
+            headers: {
+              "Authorization": `api-key ${privacyApiKey}`
+            },
+            json: true,
+          },
+          function(err, response, body) {
+            if ((err || body.error) || response.statusCode !== 200) {
+              reject((err || body.error) || body);
+            }
+            resolve(body);
+          }
+        )
+    })
   },
   /**
    * Makes a Privacy API request to enroll a user, returning a pass or a failure response

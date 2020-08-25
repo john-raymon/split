@@ -1,11 +1,27 @@
 <template>
   <div class="new-card-container overflow-y-auto">
     <div class="max-w-md mx-auto" v-if="!fundingAccountToken">
-      <p class="text-white text-3xl font-bold">
-        How would you like to fund this card?
+      <p class="text-white text-xl font-bold">
+        Choose the funding source from your connected funding accounts below.
         <span class="block text-sm tracking-wide font-light text-gray-400 pt-2">
           This funding account will only be charged for payments made on your Split virtual cards.
         </span>
+        <select class="w-full text-black">
+          <option value="" selected>
+            Select a connected funding source
+          </option>
+          <option
+            v-for="account in enabledFundingSource"
+            :key="account.token"
+            :value="account.token"
+          >
+            {{
+              `${account.last_four}${account.account_name && ` - ${account.account_name}`} - ${
+                account.type
+              }`
+            }}
+          </option>
+        </select>
       </p>
       <!-- render select with list of options with funding account token values-->
       <p class="text-sm font-bold py-2 text-white">
@@ -102,6 +118,8 @@
 </template>
 <script>
 import { VMoney } from "v-money";
+import { mapState } from "vuex";
+
 /**
  * create new virtual card resource form
  * makes a request to the back-end, creating a new virtual card
@@ -121,12 +139,18 @@ export default {
   },
   directives: {
     money: VMoney
+  },
+  computed: {
+    ...mapState(["fundingSources"]),
+    enabledFundingSource() {
+      return this.fundingSources.filter(account => account.state === "ENABLED");
+    }
   }
 };
 </script>
 
 <style scoped lang="scss">
 .new-card-container {
-  @apply fixed w-full transition delay-300 font-mont h-full bg-gray-900 bottom-0 left-0 pt-12 pl-10 pr-20;
+  @apply fixed w-full transition delay-300 font-mont h-full bg-gray-900 bottom-0 left-0 pt-12 pl-10 pr-12;
 }
 </style>

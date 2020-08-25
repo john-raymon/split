@@ -4,7 +4,7 @@
       <h2 class="text-2xl mb-4 font-bold">
         Set-up & add your bank account.
         <span class="block text-gray-600 text-sm">
-          and use as a funding-source
+          to be used as a funding-source
         </span>
       </h2>
 
