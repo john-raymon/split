@@ -8,7 +8,7 @@
         </span>
         <select
           v-model="fundingAccountToken"
-          class="mt-2 text-sm  w-full bg-white text-gray-800 appearance-none rounded p-2 border border-gray-400 outline-none"
+          class="mt-2 text-base w-full bg-white text-gray-800 appearance-none rounded p-2 border border-gray-400 outline-none"
         >
           <option value="" selected>
             Select an account
@@ -58,7 +58,7 @@
         Create a card:
       </p>
 
-      <div>
+      <div class="border-b border-gray-400 pb-4">
         <div class="card-spend-limit flex flex-col">
           <label class="text-md" for="spend-limit">What's this card for? (memo):</label>
           <input
@@ -90,6 +90,11 @@
             value="SINGLE_USE"
           />
           <label class="cursor-pointer" for="SINGLE_USE">Make this a single-use card</label>
+        </div>
+
+        <div class="space-x-2 text-black text-sm">
+          <input v-model="cardType" type="radio" id="UNLOCKED" name="card-type" value="UNLOCKED" />
+          <label class="cursor-pointer" for="UNLOCKED">Make this an unlocked card</label>
         </div>
       </div>
 
@@ -143,7 +148,7 @@
 </template>
 <script>
 import { Money } from "v-money";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 /**
  * create new virtual card resource form
@@ -156,11 +161,11 @@ export default {
   },
   data() {
     return {
-      spendLimit: "",
+      spendLimit: "0",
       memo: "",
-      cardType: "",
+      cardType: "UNLOCKED",
       fundingAccountToken: "",
-      spendingLimitDuration: "",
+      spendingLimitDuration: "TRANSACTION",
       fundingAccountTokenSelected: false,
       money: {
         prefix: "$",
@@ -177,6 +182,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["fetchVirtualDebitCards"]),
     handleCreateCardSubmit() {
       this.$http
         ._post("/users/cards", {
@@ -188,6 +194,8 @@ export default {
         })
         .then(body => {
           alert(JSON.stringify(body));
+          // refetch virtual debit card and update state
+          this.fetchVirtualDebitCards(this.$http);
         })
         .catch(err => {
           if (err.response) {

@@ -14,34 +14,38 @@ export default new Vuex.Store({
   state: {
     userAuth: {
       isAuth: false,
-      user: null
+      user: null,
+      earlyAccess: true
     },
     fundingSources: [],
     virtualDebitCards: {
       data: [],
       page: 1,
       total_entries: 0,
-      total_pages: 0,
-    },
+      total_pages: 0
+    }
   },
   mutations: {
     setUserAuth(state, userAuth) {
-      state.userAuth = { ...userAuth, user: { ...userAuth.user, accessToken: undefined } };
+      state.userAuth = {
+        ...state.userAuth,
+        ...userAuth,
+        user: { ...userAuth.user, accessToken: undefined }
+      };
     },
     resetAuth(state) {
       state.userAuth = {
         isAuth: false,
-        user: null
+        user: null,
+        earlyAccess: true
       };
     },
     setFundingSources(state, fundingSources) {
       state.fundingSources = fundingSources;
     },
     setVirtualDebitCards(state, payload) {
-      debugger;
       state.virtualDebitCards = payload;
-      debugger;
-    },
+    }
   },
   actions: {
     updateUserAuth(context, authData) {
@@ -67,14 +71,13 @@ export default new Vuex.Store({
       userAgent
         ._get(`/users/cards`)
         .then(body => {
-          debugger;
           context.commit("setVirtualDebitCards", body);
         })
         .catch(err => {
           console.log("there was an error while dispatching the fetchVirtualDebitCards action");
           throw err;
         });
-    },
+    }
   },
   plugins: [persist.plugin]
 });

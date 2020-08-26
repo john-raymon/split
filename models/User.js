@@ -16,6 +16,10 @@ const UserSchema = new mongoose.Schema(
       required: [true, "is required"],
       match: [/\S+@\S+\.\S+/, "is invalid"]
     },
+    planType: {
+      type: String,
+      default: 'BASIC',
+    },
     isEmailConfirmed: {
       type: Boolean,
       default: false

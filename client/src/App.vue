@@ -1,6 +1,6 @@
 <template>
   <component @log-out="handleLogout" :is="layout" :userAuth="userAuth">
-    <router-view :userAuth="userAuth" />
+    <router-view :userAuth="userAuth" :virtualDebitCards="virtualDebitCards" />
   </component>
 </template>
 
@@ -13,7 +13,7 @@ export default {
     layout() {
       return this.$route.meta.layout || "default-layout";
     },
-    ...mapState(["userAuth"])
+    ...mapState(["userAuth", "virtualDebitCards"])
   },
   watch: {
     userAuth: {

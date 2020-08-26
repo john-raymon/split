@@ -11,6 +11,10 @@ const request = require("request");
 const privacyApiKey = config.get('privacy.apiKey');
 const privacyUrl = config.get('privacy.url');
 
+/**
+ * TODO: add user limit of 5 virtual debit cards per user
+ */
+
 module.exports = {
   listVirtualDebitCards(accountToken) {
     return new Promise((resolve, reject) => {
