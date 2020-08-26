@@ -18,7 +18,7 @@
     @apply
     outline-none
     bg-green-600
-    rounded-full
+    rounded-lg
     text-gray-200
     text-sm
     font-bold
@@ -27,13 +27,16 @@
     &:active, &:focus, &:hover {
       @apply opacity-75;
     }
+    &:disabled {
+      @apply opacity-25;
+    }
   }
 
   &--red {
     @apply
     outline-none
     bg-red-600
-    rounded-full
+    rounded-lg
     text-gray-200
     text-sm
     font-bold
@@ -44,8 +47,6 @@
     }
   }
 }
-
-
 
 .text-field {
   @apply block border border-gray-300 w-full p-3 rounded mb-4;

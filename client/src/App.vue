@@ -1,6 +1,6 @@
 <template>
   <component @log-out="handleLogout" :is="layout" :userAuth="userAuth">
-    <router-view :userAuth="userAuth" />
+    <router-view :userAuth="userAuth" :virtualDebitCards="virtualDebitCards" />
   </component>
 </template>
 
@@ -13,10 +13,21 @@ export default {
     layout() {
       return this.$route.meta.layout || "default-layout";
     },
-    ...mapState(["userAuth"])
+    ...mapState(["userAuth", "virtualDebitCards"])
+  },
+  watch: {
+    userAuth: {
+      handler: function(userAuth) {
+        if (userAuth.isAuth) {
+          this.fetchFundingSources(this.$http);
+          this.fetchVirtualDebitCards(this.$http);
+        }
+      },
+      immediate: true
+    }
   },
   methods: {
-    ...mapActions(["logout"]),
+    ...mapActions(["logout", "fetchFundingSources", "fetchVirtualDebitCards"]),
     handleLogout() {
       this.logout().then(() => {
         this.$nextTick().then(() => {

@@ -1,18 +1,18 @@
 <template>
   <div class="default-layout px-8">
-    <header class="w-full pt-20 flex flex-col border-b border-indigo-200 pb-8">
+    <header class="w-full pt-20 flex flex-col border-b border-gray-200 pb-8">
       <router-link to="/" class="w-24 h-auto">
         <Logo />
       </router-link>
       <div v-if="userAuth.isAuth" class="mt-16 flex justify-between items-center">
         <h1 class="text-gray-700 text-3xl">
-          <span class="text-indigo-800 font-black">
+          <span class="text-gray-800 font-bold">
             Hello,
           </span>
           <br />
           John
         </h1>
-        <ul class="text-xs text-right text-gray-500 tracking-widest font-bold">
+        <ul class="text-xs text-right text-gray-500 tracking-widest">
           <template v-if="userAuth.isAuth">
             <li>
               <router-link to="">
@@ -63,7 +63,8 @@ export default {
 };
 </script>
 <style lang="scss">
-html, body {
+html,
+body {
   @apply bg-gray-100;
 }
 .default-layout {

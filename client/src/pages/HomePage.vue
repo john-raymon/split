@@ -4,22 +4,19 @@
       <div class="w-1/2 self-end max-w-sm pointer-events-none">
         <img class="pointer-events-none" src="./../assets/media/marketing-site-hero.png" />
       </div>
-      <p class="absolute font-mont font-medium text-white mb-2 text-base sm:mb-20 lg:mb-0 md:text-2xl text-left tracking-wide w-3/4 self-start pr-8">
+      <p
+        class="absolute font-mont font-medium text-white mb-2 text-base sm:mb-20 lg:mb-0 md:text-2xl text-left tracking-wide w-3/4 self-start pr-8"
+      >
         <span class="font-bold">
           Virtual debit cards.
         </span>
         <br />
-        Designed on the
-        simple premise
-        that debit cards are
-        much more useful
-        when you can
-        customize, control,
-        & create them.
+        Designed on the simple premise that debit cards are much more useful when you can customize,
+        control, & create them.
         <span class="block text-sm text-gray-500 pt-2">
           Learn more below.
         </span>
-    </p>
+      </p>
     </div>
     <div class="flex flex-col md:flex-row items-center py-8">
       <div class="w-full overflow-hidden h-auto py-6">
@@ -27,16 +24,22 @@
       </div>
       <div class="md:order-first space-y-6 md:w-3/4">
         <p class="font-mont text-white text-md text-left tracking-wider self-start">
-        Create cards for your own specific spending, (like Netflix, Uber, or even the Playstation network).
+          Create cards for your own specific spending, (like Netflix, Uber, or even the Playstation
+          network).
         </p>
 
         <p class="font-mont text-white text-md text-left tracking-wider self-start">
           How is this useful?
-          <br/>
-          If you ever find yourself second-guessing sharing your debit card’s information, whether with your children or an online business, just create a virtual card and share that instead.
+          <br />
+          If you ever find yourself second-guessing sharing your debit card’s information, whether
+          with your children or an online business, just create a virtual card and share that
+          instead.
         </p>
         <div>
-          <router-link to="/sign-up" class="bg-green-400 text-green-800 rounded-full px-3 py-2 text-xs focus:outline-none">
+          <router-link
+            to="/sign-up"
+            class="bg-green-400 text-green-800 rounded-full px-3 py-2 text-xs focus:outline-none"
+          >
             Sign up now for early access
           </router-link>
         </div>
@@ -45,9 +48,8 @@
   </div>
 </template>
 <script>
-
 export default {
-  name: "Homepage",
+  name: "Homepage"
 };
 </script>
 <style lang="scss">

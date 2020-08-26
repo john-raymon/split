@@ -1,16 +1,64 @@
 const express = require('express');
 const router = express.Router();
 const service = require('@/services/users');
-const middlewares = require('@/middlewares');
+const privacyService = require('@/services/privacy');
+const middleware = require('@/middleware');
 
 router.post('/', ...service.create);
 
-router.get('/', middlewares.requireAuthUser, function(req, res, next) {
+router.get('/', middleware.requireAuthUser, function(req, res, next) {
   return res.json({
     user: req.authUser.authSerialize(false),
   })
 })
 
 router.post('/login', ...service.login);
+
+router.post('/fundingsources/bank', middleware.requireAuthUser, function(req, res, next) {
+  return privacyService.addFundingBankAccount({
+    routing_number: req.body.routing_number,
+    account_number: req.body.account_number,
+    account_name: req.body.account_name,
+  }, req.authUser.privacyAccountToken)
+    .then(({data}) => res.json(data))
+    .catch(next);
+})
+
+router.get('/fundingsources', middleware.requireAuthUser, function(req, res, next) {
+  return privacyService.getAllFundingSources({
+    account_token: req.authUser.privacyAccountToken,
+  })
+    .then((fundingSources) => res.json({
+      fundingSources: fundingSources
+    }))
+    .catch((error) => { next(error); });
+})
+
+
+router.post('/cards', middleware.requireAuthUser, function(req, res, next) {
+  const { memo, type, funding_token, state, spend_limit, spend_limit_duration } = req.body;
+  return privacyService.createVirtualDebitCard({
+    memo,
+    type,
+    funding_token,
+    state,
+    spend_limit,
+    spend_limit_duration,
+  },
+    req.authUser.privacyAccountToken,
+  )
+    .then((virtualCard) => res.json({
+      virtualCard
+    }))
+    .catch((error) => { next(error); });
+})
+
+router.get('/cards', middleware.requireAuthUser, function(req, res, next) {
+  return privacyService.listVirtualDebitCards(
+    req.authUser.privacyAccountToken,
+  )
+    .then(body => { return res.json(body); })
+    .catch((error) => { next(error); });
+})
 
 module.exports = router;

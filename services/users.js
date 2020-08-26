@@ -19,6 +19,7 @@ const isBodyMissingProps = require('@/utils/isBodyMissingProps');
 const { userPassport } = require('@/config/passport');
 
 const privacy = require('@/services/privacy');
+const mailgun = require('@/services/mailgun');
 
 module.exports = {
   /**
@@ -105,7 +106,6 @@ module.exports = {
           });
         })
         .then((privacyRes) => {
-          debugger;
           const user = new User({
             email,
             firstName,
@@ -119,7 +119,15 @@ module.exports = {
           return user
             .save()
             .then(function(user) {
-              return res.json({ success: true, user: user.authSerialize() });
+              // send welcome email using mailgun service sendWelcomeEmail()
+              return mailgun.sendWelcomeEmail(user.email, 'You\'re in!', user.firstName)
+                .then((res) => {
+                })
+                .catch((error) => {
+                })
+                .finally(() => {
+                  return res.json({ success: true, user: user.authSerialize() });
+                })
             })
         })
         .catch(next);
