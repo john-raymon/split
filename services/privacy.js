@@ -16,6 +16,27 @@ const privacyUrl = config.get('privacy.url');
  */
 
 module.exports = {
+  updateVirtualCard(updatedCardData, accountToken) {
+    return new Promise((resolve, reject) => {
+      request(
+        {
+          url: `${privacyUrl}card?account_token=${accountToken}`,
+          method: "PUT",
+          headers: {
+            "Authorization": `api-key ${privacyApiKey}`
+          },
+          json: true,
+          body: updatedCardData,
+        },
+        function(err, response, body) {
+          if ((err || body.error) || response.statusCode !== 200) {
+            reject((err || body.error) || body);
+          }
+          resolve(body);
+        }
+      );
+    });
+  },
   listVirtualDebitCards(accountToken) {
     return new Promise((resolve, reject) => {
       request(
