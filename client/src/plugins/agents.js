@@ -69,6 +69,10 @@ class Agent {
   _post(url, body, fullPath = false) {
     return axios.post(fullPath ? url : `${this.API_ROOT}${url}`, body).then(this._responseBody);
   }
+
+  _put(url, body, fullPath = false) {
+    return axios.put(fullPath ? url : `${this.API_ROOT}${url}`, body).then(this._responseBody);
+  }
 }
 
 export default Agent;

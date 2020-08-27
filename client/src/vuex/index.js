@@ -77,6 +77,17 @@ export default new Vuex.Store({
           console.log("there was an error while dispatching the fetchVirtualDebitCards action");
           throw err;
         });
+    },
+    updateVirtualDebitCard(context, { userAgent, updatedCardData }) {
+      userAgent
+        ._put(`/users/cards`, updatedCardData)
+        .then(() => {
+          return context.dispatch("fetchVirtualDebitCards", userAgent);
+        })
+        .catch(err => {
+          console.log("there was an error while dispatching the fetchVirtualDebitCards action");
+          throw err;
+        });
     }
   },
   plugins: [persist.plugin]

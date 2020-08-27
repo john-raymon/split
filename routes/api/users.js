@@ -58,7 +58,13 @@ router.get('/cards', middleware.requireAuthUser, function(req, res, next) {
     req.authUser.privacyAccountToken,
   )
     .then(body => { return res.json(body); })
-    .catch((error) => { next(error); });
+    .catch(next);
+})
+
+router.put('/cards', middleware.requireAuthUser, function(req, res, next) {
+  return privacyService.updateVirtualCard(req.body, req.authUser.privacyAccountToken)
+    .then(body => { return res.json(body); })
+    .catch(next);
 })
 
 module.exports = router;
