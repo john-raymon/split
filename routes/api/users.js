@@ -56,6 +56,7 @@ router.post('/cards', middleware.requireAuthUser, function(req, res, next) {
 router.get('/cards', middleware.requireAuthUser, function(req, res, next) {
   return privacyService.listVirtualDebitCards(
     req.authUser.privacyAccountToken,
+    req.query,
   )
     .then(body => { return res.json(body); })
     .catch(next);

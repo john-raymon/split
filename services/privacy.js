@@ -37,7 +37,7 @@ module.exports = {
       );
     });
   },
-  listVirtualDebitCards(accountToken) {
+  listVirtualDebitCards(accountToken, queryData) {
     return new Promise((resolve, reject) => {
       request(
         {
@@ -46,6 +46,7 @@ module.exports = {
           headers: {
             "Authorization": `api-key ${privacyApiKey}`
           },
+          qs: queryData,
           json: true,
         },
         function(err, response, body) {
