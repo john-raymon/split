@@ -28,12 +28,12 @@ const routes = [
       {
         name: "new-card",
         path: "card/new",
-        component: NewCard,
+        component: NewCard
       },
       {
         name: "manage-card",
         path: "card/manage/:cardToken",
-        component: ManageCard,
+        component: ManageCard
       },
       {
         name: "add-funding-bank-account",

@@ -1,5 +1,5 @@
 <template>
-  <div class="new-card-container overflow-y-auto">
+  <div class="new-card-container overflow-y-auto flex items-center">
     <div class="max-w-md mx-auto" v-if="!fundingAccountTokenSelected">
       <p class="text-black text-xl font-bold">
         Choose the funding source from your connected funding accounts below.

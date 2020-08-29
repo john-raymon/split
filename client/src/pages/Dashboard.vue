@@ -32,11 +32,17 @@
           Create a new card
         </router-link>
       </div>
-      <p class="text-gray-800 font-bold text-2xl tracking-tight mb-2">
+      <p class="text-gray-800 font-bold text-2xl tracking-tight mb-2 ">
         Virtual Cards ({{ amountOfVirtualDebitCards }}):
       </p>
-      <div class="w-full flex flex-col max-w-sm space-y-4">
-        <VirtualCard v-for="card in virtualDebitCards.data" :key="card.last_four" :card="card" />
+      <div class="w-full flex flex-wrap -m-1 sm:-m-4 pt-4">
+        <div
+          v-for="card in virtualDebitCards.data"
+          :key="card.last_four"
+          class="w-full sm:w-1/2 p-1 sm:p-4 mb-2"
+        >
+          <VirtualCard :card="card" />
+        </div>
       </div>
       <router-view></router-view>
     </div>

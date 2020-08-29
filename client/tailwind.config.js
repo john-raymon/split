@@ -21,9 +21,9 @@ module.exports = {
     },
     extend: {
       borderRadius: {
-        xl: '1.5rem',
-        full: '9999px',
-      },
+        xl: "1.5rem",
+        full: "9999px"
+      }
     }
   },
   variants: {

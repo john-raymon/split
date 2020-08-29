@@ -16,6 +16,27 @@ const privacyUrl = config.get('privacy.url');
  */
 
 module.exports = {
+  fetchTransactions(queryData) {
+    return new Promise((resolve, reject) => {
+      request(
+        {
+          url: `${privacyUrl}transaction`,
+          method: "GET",
+          headers: {
+            "Authorization": `api-key ${privacyApiKey}`
+          },
+          qs: queryData,
+          json: true,
+        },
+        function(err, response, body) {
+          if ((err || body.error) || response.statusCode !== 200) {
+            reject((err || body.error) || body);
+          }
+          resolve(body);
+        }
+      );
+    });
+  },
   updateVirtualCard(updatedCardData, accountToken) {
     return new Promise((resolve, reject) => {
       request(

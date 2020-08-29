@@ -2,6 +2,7 @@ const jwt = require('express-jwt');
 const config = require('config');
 const secret = config.get('app.secret');
 const mongoose = require('mongoose');
+const privacyService = require('@/services/privacy');
 // models
 const User = require('@/models/User');
 
@@ -53,6 +54,26 @@ const auth = {
       })
       .catch(next);
   }],
+  limitCards(limitAmount) {
+    return (req, res, next) => {
+      return privacyService.listVirtualDebitCards(
+        req.authUser.privacyAccountToken,
+        req.query,
+      )
+        .then(body => {
+          const activeCards = body.data
+            .filter(card => (card.state === 'OPEN' || card.state === 'PAUSED'));
+          if (activeCards.length >= limitAmount) {
+            return next({
+              name: "NotAllowed",
+              message: `You have ${activeCards.length} open/paused cards. On your current plan you can only maintain ${limitAmount} active cards.`,
+            });
+          }
+          return next();
+        })
+        .catch(next);
+    }
+  },
 };
 
 module.exports = auth;
