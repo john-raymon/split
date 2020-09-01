@@ -7,9 +7,11 @@ import DefaultLayout from "@/layout/DefaultLayout";
 import DarkLayout from "@/layout/DarkLayout";
 import ApiAgent from "@/plugins/agents";
 import store from "@/vuex";
+import Moment from "vue-moment";
 import "./assets/tailwind.css";
 
 Vue.use(VueRouter);
+Vue.use(Moment);
 
 // globally register layout components
 Vue.use(globalComponentInstaller, {
