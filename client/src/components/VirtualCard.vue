@@ -8,7 +8,7 @@
           <p class="text-white text-xs text-left">
             {{ card.memo }}
           </p>
-          <div class="px-2">
+          <div>
             <p class="flex justify-between">
               <template v-if="!showInfo">
                 <span class="text-gray-500">

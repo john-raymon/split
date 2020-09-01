@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed overflow-y-auto py-4 w-full h-full inset-0 bg-white update-card-container">
+  <div class="fixed overflow-y-auto p-4 w-full h-full inset-0 bg-white update-card-container">
     <div v-if="loading">
       <!-- loading -->
     </div>
@@ -59,7 +59,7 @@ export default {
       transactions: []
     };
   },
-  beforeRouteLeave ({ path }, from, next) {
+  beforeRouteLeave({ path }, from, next) {
     console.log(from, next);
     next(false);
     window.location = path;
