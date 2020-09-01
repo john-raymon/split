@@ -5,6 +5,7 @@ import AuthPage from "@/pages/AuthPage";
 import SignInPage from "@/pages/SignInPage";
 import HomePage from "@/pages/HomePage";
 import AddFundingAccount from "@/pages/AddFundingAccount";
+import ManageCard from "@/pages/ManageCard";
 import store from "@/vuex";
 
 const routes = [
@@ -28,6 +29,11 @@ const routes = [
         name: "new-card",
         path: "card/new",
         component: NewCard
+      },
+      {
+        name: "manage-card",
+        path: "card/manage/:cardToken",
+        component: ManageCard
       },
       {
         name: "add-funding-bank-account",
