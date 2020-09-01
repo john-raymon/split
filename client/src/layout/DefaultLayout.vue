@@ -1,5 +1,5 @@
 <template>
-  <div class="default-layout px-5 sm:px-8">
+  <div class="default-layout px-8">
     <header class="w-full pt-20 flex flex-col border-b border-gray-200 pb-8">
       <router-link to="/" class="w-24 h-auto">
         <Logo />

@@ -79,11 +79,10 @@ export default new Vuex.Store({
         });
     },
     updateVirtualDebitCard(context, { userAgent, updatedCardData }) {
-      return userAgent
+      userAgent
         ._put(`/users/cards`, updatedCardData)
-        .then(body => {
-          context.dispatch("fetchVirtualDebitCards", userAgent);
-          return body;
+        .then(() => {
+          return context.dispatch("fetchVirtualDebitCards", userAgent);
         })
         .catch(err => {
           console.log("there was an error while dispatching the fetchVirtualDebitCards action");
