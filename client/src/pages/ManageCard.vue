@@ -59,6 +59,11 @@ export default {
       transactions: []
     };
   },
+  beforeRouteLeave ({ path }, from, next) {
+    console.log(from, next);
+    next(false);
+    window.location = path;
+  },
   created() {
     this.fetchCard().then(() => {
       this.fetchTransactions();
