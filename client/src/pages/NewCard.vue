@@ -53,7 +53,7 @@
         </button>
       </div>
     </div>
-    <form v-else class="text-gray-800 space-y-5 max-h-full max-w-md mx-auto" @submit.prevent>
+    <form v-else class="w-full text-gray-800 space-y-5 max-h-full max-w-md mx-auto" @submit.prevent>
       <p class="text-black text-3xl mb-4 font-bold">
         Create a card:
       </p>
