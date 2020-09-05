@@ -5,12 +5,12 @@
         <Logo />
       </router-link>
       <div v-if="userAuth.isAuth" class="mt-16 flex justify-between items-center">
-        <h1 class="text-gray-700 text-3xl">
-          <span class="text-gray-800 font-bold">
+        <h1 class="text-gray-700 text-3xl capitalize">
+          <span class="text-gray-800 font-bold capitl">
             Hello,
           </span>
           <br />
-          John
+          {{ userAuth.user.firstName }}
         </h1>
         <ul class="text-xs text-right text-gray-500 tracking-widest">
           <template v-if="userAuth.isAuth">
