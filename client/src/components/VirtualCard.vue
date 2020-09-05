@@ -5,9 +5,14 @@
         <div
           class="text-lg text-gray-100 text-tracking-wider text-center w-full px-10 flex-grow flex flex-col justify-between py-8"
         >
-          <p class="text-white text-xs text-left">
-            {{ card.memo }}
-          </p>
+          <div class="h-5 w-full flex-row flex justify-between">
+            <p class="text-white text-xs text-left">
+              {{ card.memo }}
+            </p>
+            <div v-if="loading" class="relative w-5 h-5 z-0">
+              <ChecLoading variant="dark" :withoutBackground="true" class="w-5 h-5 mx-auto" />
+            </div>
+          </div>
           <div>
             <p class="flex justify-between">
               <template v-if="!showInfo">
@@ -83,6 +88,7 @@
           v-if="card.state !== 'CLOSED'"
           @input="e => handleCardToggle(card.token, e)"
           :toggled="card.state === 'OPEN'"
+          :disabled="loading"
         >
           <span class="text-gray-400">
             On / Off
@@ -110,8 +116,7 @@
           </div>
           Manage card
         </router-link>
-
-        <template v-if="$route.name === 'manage-card'">
+        <template v-else>
           <button
             v-if="card.state !== 'CLOSED'"
             @click="e => handleCardClose(card.token, e)"
@@ -171,6 +176,7 @@
   </div>
 </template>
 <script>
+import { ChecLoading } from '@chec/ui-library';
 import BaseSwitch from "@/components/ui/BaseSwitch";
 import { mapActions } from "vuex";
 
@@ -180,16 +186,19 @@ export default {
     card: Object
   },
   components: {
-    BaseSwitch
+    BaseSwitch,
+    ChecLoading,
   },
   data() {
     return {
-      showInfo: false
+      showInfo: false,
+      loading: false,
     };
   },
   methods: {
     ...mapActions(["updateVirtualDebitCard"]),
     handleCardToggle(cardToken, newSwitchState) {
+      this.loading = true;
       const requestedCardState = newSwitchState ? "OPEN" : "PAUSED";
       this.updateVirtualDebitCard({
         userAgent: this.$http,
@@ -199,7 +208,9 @@ export default {
         }
       }).then(newCardData => {
         this.$emit("update:card", newCardData);
-      });
+      }).finally(() => {
+        this.loading = false;
+      })
     },
     handleCardClose(cardToken) {
       if (
