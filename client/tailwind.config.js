@@ -1,3 +1,5 @@
+const uiLibraryTailwindConfig = require('@chec/ui-library/tailwind.config.js');
+
 module.exports = {
   theme: {
     fontFamily: {
@@ -22,7 +24,8 @@ module.exports = {
     extend: {
       borderRadius: {
         xl: "1.5rem",
-        full: "9999px"
+        full: "9999px",
+        ...uiLibraryTailwindConfig.theme.extend.borderRadius,
       }
     }
   },

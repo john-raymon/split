@@ -5,7 +5,7 @@
         <img class="pointer-events-none" src="./../assets/media/marketing-site-hero.png" />
       </div>
       <p
-        class="absolute font-mont font-medium text-white mb-2 text-base sm:mb-20 lg:mb-0 md:text-2xl text-left tracking-wide w-3/4 self-start pr-8"
+        class="absolute font-mont font-normal text-white mb-2 text-base sm:mb-20 lg:mb-0 md:text-2xl text-left tracking-wide w-3/4 self-start pr-8"
       >
         <span class="font-bold">
           Virtual debit cards.
@@ -23,13 +23,13 @@
         <img class="pointer-events-none" src="./../assets/media/split-screenshot-2.png" />
       </div>
       <div class="md:order-first space-y-6 md:w-3/4">
-        <p class="font-mont text-white text-md text-left tracking-wider self-start">
-          Create cards for your own specific spending, (like Netflix, Uber, or even the Playstation
+        <p class="font-mont font-light text-white text-md text-left tracking-wider self-start">
+          <span class="font-medium">Create cards for your own specific spending,</span> (like Netflix, Uber, or even the Playstation
           network).
         </p>
 
-        <p class="font-mont text-white text-md text-left tracking-wider self-start">
-          How is this useful?
+        <p class="font-mont font-light text-white text-md text-left tracking-wider self-start">
+          <span class="font-medium">How is this useful?</span>
           <br />
           If you ever find yourself second-guessing sharing your debit card’s information, whether
           with your children or an online business, just create a virtual card and share that
