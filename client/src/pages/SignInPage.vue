@@ -44,7 +44,7 @@ export default {
     userAuth: {
       handler(val) {
         if (val.isAuth) {
-          const redirectRouteName = this.$route.query.redirect || "dashboard";
+          const redirectRouteName = this.$route.query.redirect || "dashboard.homepage";
           return this.$router.push({ name: redirectRouteName, query: this.$route.query });
         }
       },

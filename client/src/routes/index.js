@@ -6,6 +6,7 @@ import SignInPage from "@/pages/SignInPage";
 import HomePage from "@/pages/HomePage";
 import AddFundingAccount from "@/pages/AddFundingAccount";
 import ManageCard from "@/pages/ManageCard";
+import DashboardHomepage from "@/pages/DashboardHomepage";
 import store from "@/vuex";
 
 const routes = [
@@ -18,13 +19,17 @@ const routes = [
     }
   },
   {
-    name: "dashboard",
     path: "/dashboard",
     component: Dashboard,
     meta: {
       requireUserAuth: true
     },
     children: [
+      {
+        name: "dashboard.homepage",
+        path: "",
+        component: DashboardHomepage
+      },
       {
         name: "new-card",
         path: "card/new",

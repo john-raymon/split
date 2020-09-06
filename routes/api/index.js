@@ -37,6 +37,10 @@ router.use(function(err, req, res, next) {
   if (err.name === "BadRequest") {
     return res.status(400).json(err)
   };
+
+  if (err.name === "NotAllowed") {
+    return res.status(405).json(err);
+  }
   next(err);
 })
 

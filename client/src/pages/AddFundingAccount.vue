@@ -1,7 +1,7 @@
 <template>
   <div class="funding-account overflow-y-auto">
     <form class="space-y-5 max-h-full max-w-md mx-auto" @submit.prevent>
-      <h2 class="text-2xl mb-4 font-bold">
+      <h2 class="text-2xl mb-4 font-normal">
         Set-up & add your bank account.
         <span class="block text-gray-600 text-sm">
           to be used as a funding-source
@@ -51,7 +51,7 @@
         Add funding source
       </button>
       <button
-        @click="() => $router.push({ name: 'dashboard' })"
+        @click="() => $router.push({ name: 'dashboard.homepage' })"
         type="submit"
         class="button--red flex-grow rounded-md bg-red-300"
       >
@@ -101,6 +101,6 @@ export default {
 
 <style scoped lang="scss">
 .funding-account {
-  @apply fixed w-full h-full transition delay-300 font-mont bg-white bottom-0 left-0 pt-12 pl-10 pr-20;
+  @apply transition delay-300 font-mont bottom-0 left-0 pt-12 pl-10 pr-20;
 }
 </style>

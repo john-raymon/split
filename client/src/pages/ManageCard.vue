@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed overflow-y-auto p-4 w-full h-full inset-0 bg-white update-card-container">
+  <div class="w-full h-full inset-0 update-card-container">
     <div v-if="loading">
       <!-- loading -->
     </div>

@@ -1,7 +1,7 @@
 <template>
-  <div class="new-card-container overflow-y-auto flex items-center">
-    <div class="max-w-md mx-auto" v-if="!fundingAccountTokenSelected">
-      <p class="text-black text-xl font-bold">
+  <div class="new-card-container">
+    <div class="max-w-md" v-if="!fundingAccountTokenSelected">
+      <p class="text-black text-xl font-normal">
         Choose the funding source from your connected funding accounts below.
         <span class="block text-sm tracking-wide font-light text-gray-800 pt-2">
           This funding account will only be charged for payments made on your Split virtual cards.
@@ -37,7 +37,7 @@
       </router-link>
       <div class="card-form__controls flex justify-between space-x-2 py-4 max-w-md">
         <button
-          @click="() => $router.push({ name: 'dashboard' })"
+          @click="() => $router.push({ name: 'dashboard.homepage' })"
           type="submit"
           class="button--red w-1/2 rounded-md self-end bg-red-300"
         >
@@ -54,7 +54,7 @@
       </div>
     </div>
     <form v-else class="w-full text-gray-800 space-y-5 max-h-full max-w-md mx-auto" @submit.prevent>
-      <p class="text-black text-3xl mb-4 font-bold">
+      <p class="text-black text-3xl mb-4 font-medium">
         Create a card:
       </p>
 
@@ -98,7 +98,7 @@
         </div>
       </div>
 
-      <div class="card-spend-limit flex flex-col">
+      <div class="card-spend-limit flex flex-col border-b border-gray-300 pb-4">
         <label class="text-md" for="spend-limit">Spending limit amount:</label>
         <money
           class="outline-none text-indigo-500 text-6xl md:text-8xl bg-transparent appearance-none"
@@ -129,7 +129,7 @@
 
       <div class="card-form__controls flex justify-between flex-wrap space-x-2 pb-8 max-w-md">
         <button
-          @click="() => $router.push({ name: 'dashboard' })"
+          @click="() => $router.push({ name: 'dashboard.homepage' })"
           type="submit"
           class="button--red flex-grow rounded-md self-end bg-red-300"
         >
@@ -193,9 +193,12 @@ export default {
           spend_limit: this.spendLimit * 100
         })
         .then(body => {
-          alert(JSON.stringify(body));
+          this.$toast.success("Your new card has been successfully created.");
           // refetch virtual debit card and update state
           this.fetchVirtualDebitCards(this.$http);
+          this.$router.push({
+            path: `/dashboard/card/manage/${body.virtualCard.token}`
+          });
         })
         .catch(err => {
           if (err.response) {
@@ -210,6 +213,6 @@ export default {
 
 <style scoped lang="scss">
 .new-card-container {
-  @apply fixed w-full transition delay-300 font-mont text-black h-full bg-white bottom-0 left-0 pt-12 pl-10 pr-12;
+  @apply transition delay-300 font-mont text-black h-full pt-12;
 }
 </style>

@@ -1,7 +1,11 @@
+require("dotenv").config();
 /**
  * config
  */
 const config = require('config');
+const privacyPlan = config.get('privacy.plan');
+const adminEmail = config.get('privacy.adminEmail');
+
 
 /**
  * models
@@ -94,6 +98,9 @@ module.exports = {
         })
         .then(() => {
           // enroll on Privacy
+          if (process.env.NODE_ENV !== "development" && privacyPlan !== 'enterprise' && email === adminEmail ) {
+            return { data: { account_token: '' }};
+          }
           return privacy.enrollUser({
             first_name: firstName,
             last_name: lastName,
@@ -103,7 +110,9 @@ module.exports = {
             dob,
             phone_number: phoneNumber,
             ssn_last_four: socialLastFour,
-          });
+          }).catch(() => {
+            throw { name: 'NotAllowed', message: 'We weren\'t able to create your Split account right now. Please contact us at info@splitcards.app.' };
+          })
         })
         .then((privacyRes) => {
           const user = new User({
