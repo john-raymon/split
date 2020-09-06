@@ -6,8 +6,8 @@
           class="text-lg text-gray-100 text-tracking-wider text-center w-full px-10 flex-grow flex flex-col justify-between py-8"
         >
           <div class="h-5 w-full flex-row flex justify-between">
-            <p class="text-white text-xs text-left">
-              {{ card.memo }}
+            <p class="text-white font-thin text-xs text-left">
+              {{ card.memo || "No name" }}
             </p>
             <div v-if="loading" class="relative w-5 h-5 z-0">
               <ChecLoading variant="dark" :withoutBackground="true" class="w-5 h-5 mx-auto" />
@@ -45,14 +45,14 @@
             <div class="flex justify-between items-center">
               <button
                 @click="toggleShowInfo"
-                class="focus:outline-none focus:text-yellow-200 hover:text-yellow-200 tracking-widest text-xs text-yellow-100 text-right w-auto float-left"
+                class="focus:outline-none focus:text-yellow-200 hover:text-yellow-200 tracking-widest text-xs text-yellow-100 text-right w-auto font-thin float-left"
               >
                 {{ showInfo ? "Hide" : "Show" }} info & cvv
               </button>
-              <p v-if="showInfo" class="text-white text-sm">CVV: {{ card.cvv }}</p>
+              <p v-if="showInfo" class="text-white text-xs font-thin">CVV: {{ card.cvv }}</p>
             </div>
           </div>
-          <div class="flex flex-row justify-between items-end text-right">
+          <div class="flex flex-row justify-between font-light items-end text-right">
             <div class="text-left text-xs">
               <p>
                 {{
@@ -176,7 +176,7 @@
   </div>
 </template>
 <script>
-import { ChecLoading } from '@chec/ui-library';
+import { ChecLoading } from "@chec/ui-library";
 import BaseSwitch from "@/components/ui/BaseSwitch";
 import { mapActions } from "vuex";
 
@@ -187,12 +187,12 @@ export default {
   },
   components: {
     BaseSwitch,
-    ChecLoading,
+    ChecLoading
   },
   data() {
     return {
       showInfo: false,
-      loading: false,
+      loading: false
     };
   },
   methods: {
@@ -206,11 +206,21 @@ export default {
           card_token: cardToken,
           state: requestedCardState
         }
-      }).then(newCardData => {
-        this.$emit("update:card", newCardData);
-      }).finally(() => {
-        this.loading = false;
       })
+        .then(newCardData => {
+          this.$emit("update:card", newCardData);
+          this.$toast.success(
+            `Your card ending in ${newCardData.last_four} has been ${
+              newSwitchState ? "turned on." : "turned off."
+            }`
+          );
+        })
+        .catch(() => {
+          this.$toast.error("There was an error updating your card.");
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     handleCardClose(cardToken) {
       if (
@@ -227,6 +237,7 @@ export default {
           }
         }).then(newCardData => {
           this.$emit("update:card", newCardData);
+          this.$toast.warning(`Your card ending in ${newCardData.last_four} has been closed.`);
         });
       }
     },

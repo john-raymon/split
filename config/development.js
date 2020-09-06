@@ -9,6 +9,8 @@ module.exports = {
   privacy: {
     apiKey: process.env.PRIVACY_SANDBOX_API_KEY,
     url: process.env.PRIVACY_SANDBOX_URL,
+    plan: 'enterprise',
+    adminEmail: 'john@johnraymon.com',
   },
   mailgun: {
     apiKey: process.env.MAILGUN_API_KEY,

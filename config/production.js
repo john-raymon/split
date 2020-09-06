@@ -10,5 +10,7 @@ module.exports = {
   privacy: {
     apiKey: process.env.PRIVACY_PROD_API_KEY,
     url: process.env.PRIVACY_PROD_URL,
+    plan: process.env.PRIVACY_CARD_ISSUE_PLAN === 'enterprise',
+    adminEmail: process.env.PRIVACY_ADMIN_EMAIL,
   },
 }

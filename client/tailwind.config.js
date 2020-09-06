@@ -1,4 +1,4 @@
-const uiLibraryTailwindConfig = require('@chec/ui-library/tailwind.config.js');
+const uiLibraryTailwindConfig = require("@chec/ui-library/tailwind.config.js");
 
 module.exports = {
   theme: {
@@ -25,7 +25,7 @@ module.exports = {
       borderRadius: {
         xl: "1.5rem",
         full: "9999px",
-        ...uiLibraryTailwindConfig.theme.extend.borderRadius,
+        ...uiLibraryTailwindConfig.theme.extend.borderRadius
       }
     }
   },

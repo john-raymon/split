@@ -24,8 +24,8 @@
       </div>
       <div class="md:order-first space-y-6 md:w-3/4">
         <p class="font-mont font-light text-white text-md text-left tracking-wider self-start">
-          <span class="font-medium">Create cards for your own specific spending,</span> (like Netflix, Uber, or even the Playstation
-          network).
+          <span class="font-medium">Create cards for your own specific spending,</span> (like
+          Netflix, Uber, or even the Playstation network).
         </p>
 
         <p class="font-mont font-light text-white text-md text-left tracking-wider self-start">

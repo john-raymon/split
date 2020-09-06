@@ -8,8 +8,12 @@ import DarkLayout from "@/layout/DarkLayout";
 import ApiAgent from "@/plugins/agents";
 import store from "@/vuex";
 import Moment from "vue-moment";
+import VueToast from "vue-toast-notification";
 import "./assets/tailwind.css";
 
+import "vue-toast-notification/dist/theme-default.css";
+
+Vue.use(VueToast);
 Vue.use(VueRouter);
 Vue.use(Moment);
 
