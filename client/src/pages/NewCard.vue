@@ -8,7 +8,7 @@
         </span>
         <select
           v-model="fundingAccountToken"
-          class="mt-2 text-base w-full bg-white text-gray-800 appearance-none rounded p-2 border border-gray-400 outline-none"
+          class="overflow-hidden mt-2 text-base w-full bg-white text-gray-800 appearance-none rounded p-2 border border-gray-400 outline-none"
         >
           <option value="" selected>
             Select an account
