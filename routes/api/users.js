@@ -18,6 +18,16 @@ const SharedCardRecord = require('@/models/SharedCardRecord');
  */
 const isBodyMissingProps = require('@/utils/isBodyMissingProps');
 
+router.get('/cardholders/check', function(req, res, next) {
+  return res.json({ 'testing': 'lets go'});
+  return AuthorizedCardHolder.findOne({ email: req.query.email })
+    .exec()
+    .then((cardholder) => {
+      debugger;
+    })
+    .catch(next);
+});
+
 router.post('/', ...service.create);
 
 router.get('/', middleware.requireAuthUser, function(req, res, next) {
