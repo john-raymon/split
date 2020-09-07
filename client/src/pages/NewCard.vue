@@ -174,7 +174,7 @@ export default {
         precision: 2,
         masked: false /* doesn't work with directive */
       },
-      loading: false,
+      loading: false
     };
   },
   computed: {

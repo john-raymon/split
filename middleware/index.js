@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const privacyService = require('@/services/privacy');
 // models
 const User = require('@/models/User');
-const ACUser = require('@/models/AuthorizedCardHolder.js');
+const ACUser = require('@/models/AuthorizedCardholder.js');
 
 function getToken(req) {
   if (

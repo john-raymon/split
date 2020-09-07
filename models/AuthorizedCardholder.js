@@ -21,6 +21,7 @@ const ACSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
+    randomKey: String,
     salt: String,
     hash: String,
     suspended: { type: Boolean, default: false }

@@ -5,11 +5,13 @@ import qs from "qs";
 
 class Agent {
   // TODO: maybe package into small helper superagent auth lib.
-  constructor(API_ROOT = "/", tokenKeyName = "jwt") {
+  constructor(API_ROOT = "/", tokenKeyName = "jwt", setTokenInStorage = true) {
+    this._responseBody = this._responseBody.bind(this);
     this.API_ROOT = API_ROOT;
     this.superagent = superagent;
     this.axios = axios;
     this.tokenKeyName = tokenKeyName;
+    this.setTokenInStorage = setTokenInStorage;
     this.axios.interceptors.request.use(async function(config) {
       const token = await Agent.getToken();
       config.headers.Authorization = `Token ${token}`;
@@ -45,7 +47,7 @@ class Agent {
 
   async _responseBody(res) {
     const { accessToken } = res.data.user || res.data.merchant || {};
-    if (accessToken) {
+    if (accessToken && this.setTokenInStorage) {
       // set in local-storage, so that on next request it's
       // attached in header
       await Agent.setToken(accessToken);

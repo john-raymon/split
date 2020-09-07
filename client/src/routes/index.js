@@ -21,7 +21,7 @@ const routes = [
   },
   {
     path: "/shared/:cardToken",
-    component: SharedCardPage,
+    component: SharedCardPage
   },
   {
     path: "/dashboard",

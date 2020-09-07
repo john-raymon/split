@@ -4,14 +4,20 @@ const service = require('@/services/users');
 const mailgunService = require('@/services/mailgun');
 const privacyService = require('@/services/privacy');
 const middleware = require('@/middleware');
+const crypto = require("crypto");
 
 const hostUrl = require('config').get('url');
 
 /**
  * models
  */
-const AuthorizedCardHolder = require('@/models/AuthorizedCardHolder');
+const AuthorizedCardholder = require('@/models/AuthorizedCardholder');
 const SharedCardRecord = require('@/models/SharedCardRecord');
+
+/**
+ * passports
+ */
+const { authorizedCardholderPassport } = require('@/config/passport');
 
 /**
  * utils
@@ -19,14 +25,98 @@ const SharedCardRecord = require('@/models/SharedCardRecord');
 const isBodyMissingProps = require('@/utils/isBodyMissingProps');
 
 router.get('/cardholders/check', function(req, res, next) {
-  return res.json({ 'testing': 'lets go'});
-  return AuthorizedCardHolder.findOne({ email: req.query.email })
+  return AuthorizedCardholder.findOne({ email: req.query.email })
     .exec()
     .then((cardholder) => {
-      debugger;
+      if (!cardholder) {
+        next({
+          name: "BadRequest",
+          message: "The cardholder account could not be found.",
+        })
+      }
+      const hasOnBoarded = !!cardholder.hash;
+      return res.json({
+        success: true,
+        hasOnBoarded,
+        cardholder: cardholder.serialize(),
+      })
     })
     .catch(next);
 });
+
+router.post('/cardholders/onboard', function(req, res, next) {
+  const requiredProps = [
+    ['email', 'The cardholder\'s email is required'],
+    ['password', 'A password is required'],
+  ];
+
+  const { hasMissingProps, propErrors } = isBodyMissingProps(
+    requiredProps,
+    req.body
+  );
+
+  if (hasMissingProps) {
+    return next({
+      name: "ValidationError",
+      errors: propErrors
+    });
+  }
+
+  const { email, password, randomKey } = req.body;
+
+  return AuthorizedCardholder.findOneAndUpdate({ email, randomKey }, { randomKey: crypto.randomBytes(16).toString("hex") })
+    .exec()
+    .then(function(cardholder) {
+      if (!cardholder || cardholder.randomKey !== randomKey) {
+        throw {
+          name: "ValidationError",
+          errors: {
+            email: { message: "The cardholder account could not be found." }
+          }
+        };
+      }
+      cardholder.setPassword(password);
+      return cardholder
+        .save()
+        .then(function(cardholder) {
+          return res.json({ success: true, cardholder: cardholder.authSerialize() });
+        })
+    })
+    .catch(next);
+});
+
+router.post('/cardholders/login', function(req, res, next) {
+  const requiredProps = [
+    ['email', 'The cardholder\'s email is required'],
+    ['password', 'A password is required'],
+  ];
+
+  const { hasMissingProps, propErrors } = isBodyMissingProps(
+    requiredProps,
+    req.body
+  );
+
+  if (hasMissingProps) {
+    return next({
+      name: "ValidationError",
+      errors: propErrors
+    });
+  }
+
+  const { email, password } = req.body;
+  return next();
+}, function(req, res, next) {
+  return authorizedCardholderPassport.authenticate('local', function(err, user, data) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return next({ ...data, success: false });
+    }
+
+    return res.json({ success: true, cardholder: user.authSerialize() });
+  })(req, res, next);
+})
 
 router.post('/', ...service.create);
 
@@ -83,9 +173,10 @@ router.post('/share-card', middleware.requireAuthUser, async function(req, res, 
    * this account will be fully set-up (password set-up) by the a.c.
    * themselves when first time accessing
    */
-  AuthorizedCardHolder.findOrCreate({
+  const randomKey = crypto.randomBytes(7).toString("hex");
+  AuthorizedCardholder.findOrCreate({
     email: recipientEmail
-  }, function(err, acUser) {
+  }, { randomKey }, function(err, acUser) {
     if (err) {
       return next(err);
     };
@@ -107,7 +198,7 @@ router.post('/share-card', middleware.requireAuthUser, async function(req, res, 
         .sendSharedCardEmail(acUser.email, {
           customerName: 'there',
           cardholderName: req.authUser.firstName,
-          linkToCard: `${hostUrl}shared/${cardToken}`,
+          linkToCard: `${hostUrl}shared/${cardToken}?ref=${acUser.randomKey}&email=${acUser.email}`,
         })
         .then((res) => {
         })
