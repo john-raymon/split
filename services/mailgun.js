@@ -23,4 +23,15 @@ module.exports = {
 
     return mailgun.messages().send(data);
   },
+  sendSharedCardEmail(to, data) {
+    return mailgun.messages().send({
+      from: 'Split - Virtual debit cards <example@example.com>',
+      to,
+      subject: "A virtual debit card has been shared with you!",
+      template: 'card-sharing-email',
+      'v:customer_name': data.customerName,
+      'v:cardholder_name': data.cardholderName,
+      'v:link_to_card': data.linkToCard,
+    });
+  }
 };

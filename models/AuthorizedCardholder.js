@@ -5,6 +5,7 @@ const config = require('config');
 const secret = config.get('app.secret');
 const jwt = require("jsonwebtoken");
 const { accessSync } = require("fs");
+const findOrCreate = require("mongoose-find-or-create");
 
 const ACSchema = new mongoose.Schema(
   {
@@ -60,6 +61,8 @@ ACSchema.methods.generateJWT = function() {
   );
 };
 
+ACSchema.plugin(findOrCreate);
+
 ACSchema.methods.authSerialize = function(accessToken = true) {
   return {
     id: this.id,
@@ -71,6 +74,13 @@ ACSchema.methods.authSerialize = function(accessToken = true) {
       }
       return this.generateJWT();
     })(),
+  };
+};
+
+ACSchema.methods.serialize = function() {
+  return {
+    id: this.id,
+    email: this.email,
   };
 };
 

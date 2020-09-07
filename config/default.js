@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 module.exports = {
+  url: "https://splitkind.com/",
   app: {
     dbPort: 3000,
     secret: process.env.APP_SECRET_KEY_PROD,

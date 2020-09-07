@@ -86,6 +86,15 @@ UserSchema.methods.generateJWT = function() {
   );
 };
 
+UserSchema.methods.serialize = function() {
+  return {
+    id: this.id,
+    email: this.email,
+    firstName: this.firstName,
+    lastName: this.lastName,
+  };
+};
+
 UserSchema.methods.authSerialize = function(accessToken = true) {
   return {
     id: this.id,
