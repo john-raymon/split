@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const privacyService = require('@/services/privacy');
 // models
 const User = require('@/models/User');
+const ACUser = require('@/models/AuthorizedCardHolder.js');
 
 function getToken(req) {
   if (
@@ -33,7 +34,7 @@ const optional = jwt({
   getToken: getToken
 });
 
-const auth = {
+module.exports = {
   required,
   optional,
   requireAuthUser: [required, function(req, res, next) {
@@ -50,6 +51,25 @@ const auth = {
           return next({ name: "UnauthorizedError", message: "The password or email may be incorrect." });
         }
         req.authUser = user;
+        return next();
+      })
+      .catch(next);
+  }],
+  requireACUser: [required, function(req, res, next) {
+    // check the req.auth.sub property
+    const { auth } = req;
+    if (auth.sub !== 'ac-user') {
+      return next({
+        name: 'UnauthorizedError',
+        message: 'You must be an authorized cardholder user.'
+      })
+    }
+    return ACUser.findById(auth.id)
+      .then(function(user) {
+        if (!user) {
+          return next({ name: "UnauthorizedError", message: "The password or email may be incorrect."})
+        }
+        req.authACUser = user;
         return next();
       })
       .catch(next);
@@ -75,5 +95,3 @@ const auth = {
     }
   },
 };
-
-module.exports = auth;

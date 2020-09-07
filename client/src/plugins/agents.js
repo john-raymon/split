@@ -5,10 +5,11 @@ import qs from "qs";
 
 class Agent {
   // TODO: maybe package into small helper superagent auth lib.
-  constructor(API_ROOT = "/") {
+  constructor(API_ROOT = "/", tokenKeyName = "jwt") {
     this.API_ROOT = API_ROOT;
     this.superagent = superagent;
     this.axios = axios;
+    this.tokenKeyName = tokenKeyName;
     this.axios.interceptors.request.use(async function(config) {
       const token = await Agent.getToken();
       config.headers.Authorization = `Token ${token}`;
@@ -18,12 +19,12 @@ class Agent {
 
   static getToken() {
     // gets the token from local-storage
-    return localforage.getItem("jwt");
+    return localforage.getItem(this.tokenKeyName);
   }
 
   static setToken(token) {
     // sets token in local-storage
-    return localforage.setItem("jwt", token);
+    return localforage.setItem(this.tokenKeyName, token);
   }
 
   async _tokenPlugin(req) {
