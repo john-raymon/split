@@ -5,7 +5,7 @@ import qs from "qs";
 
 class Agent {
   // TODO: maybe package into small helper superagent auth lib.
-  constructor(API_ROOT = "/", tokenKeyName = "jwt", setTokenInStorage = true, token = '') {
+  constructor(API_ROOT = "/", tokenKeyName = "jwt", setTokenInStorage = true, token = "") {
     this._responseBody = this._responseBody.bind(this);
     this.API_ROOT = API_ROOT;
     this.superagent = superagent;
@@ -13,24 +13,23 @@ class Agent {
     this.tokenKeyName = tokenKeyName;
     this.setTokenInStorage = setTokenInStorage;
     this.token = token;
-    this.axios.interceptors.request.use(async function(config) {
-      const token = await Agent.getToken();
-      config.headers.Authorization = `Token ${token}`;
-      return config;
-    });
+    this.axios.interceptors.request.use(
+      async function(config) {
+        const token = this.setTokenInStorage ? await Agent.getToken(this.tokenKeyName) : this.token;
+        config.headers.Authorization = `Token ${token}`;
+        return config;
+      }.bind(this)
+    );
   }
 
-  static getToken() {
-    if (!this.setTokenInStorage) {
-      return this.token;
-    }
+  static getToken(tokenKeyName) {
     // gets the token from local-storage
-    return localforage.getItem(this.tokenKeyName);
+    return localforage.getItem(tokenKeyName);
   }
 
-  static setToken(token) {
+  static setToken(token, tokenKeyName) {
     // sets token in local-storage
-    return localforage.setItem(this.tokenKeyName, token);
+    return localforage.setItem(tokenKeyName, token);
   }
 
   async _tokenPlugin(req) {
@@ -40,7 +39,7 @@ class Agent {
      * and set in it the header
      * */
     try {
-      this.token = await Agent.getToken();
+      this.token = await Agent.getToken(this.tokenKeyName);
       req.set("Authorization", `Token ${this.token || ""}`);
       return req;
     } catch (error) {
@@ -50,11 +49,11 @@ class Agent {
   }
 
   async _responseBody(res) {
-    const { accessToken } = res.data.user || res.data.merchant || {};
-    if (accessToken && this.setTokenInStorage) {
+    const { accessToken } = res.data.user || res.data.merchant || res.data.cardholder || {};
+    if (accessToken) {
       // set in local-storage, so that on next request it's
       // attached in header
-      await Agent.setToken(accessToken);
+      await Agent.setToken(accessToken, this.tokenKeyName);
     }
     return res.data;
   }

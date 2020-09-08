@@ -83,11 +83,12 @@
 <script>
 import ApiAgent from "@/plugins/agents";
 import VirtualCard from "@/components/VirtualCard";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "SharedCardPage",
   components: {
-    VirtualCard,
+    VirtualCard
   },
   data() {
     return {
@@ -97,17 +98,27 @@ export default {
       step: "PRE_CHECK", // PRE_CHECK, SIGN_IN, SIGN_UP
       password: "",
       newPassword: "",
-      card: {},
+      card: {}
     };
   },
+  created() {
+    if (this.userAuth.isAuth) {
+      this.logout();
+    }
+  },
+  beforeDestroy() {
+    this.logout();
+  },
+  computed: {
+    ...mapState(["userAuth"]),
+  },
   methods: {
+    ...mapActions(["logout"]),
     fetchCardData() {
-      // /users/cardholders/card?card_token=78e62b1a-4d83-453d-816f-1f84b3b06706
-      const apiAgent = new ApiAgent("/api", "", false, this.token);
+      const apiAgent = new ApiAgent("/api");
       apiAgent
         ._get(`/users/cardholders/card?card_token=${this.$route.params.cardToken}`)
         .then(body => {
-          debugger;
           this.card = body.data[0];
         })
         .catch(err => {
@@ -118,7 +129,7 @@ export default {
         });
     },
     onContinue() {
-      const apiAgent = new ApiAgent("/api", "", false);
+      const apiAgent = new ApiAgent("/api");
       apiAgent
         ._get(`/users/cardholders/check?email=${this.$route.query.email}`)
         .then(body => {
@@ -132,16 +143,17 @@ export default {
         });
     },
     onSignIn() {
-      const apiAgent = new ApiAgent("/api", "", false);
+      const apiAgent = new ApiAgent("/api");
       apiAgent
         ._post("/users/cardholders/login", {
           email: this.$route.query.email,
-          password: this.password,
+          password: this.password
         })
         .then(body => {
           this.token = body.cardholder.accessToken;
           this.cardholder = body.cardholder;
           this.isAuth = true;
+          this.fetchCardData();
         })
         .catch(err => {
           if (err.response) {
@@ -151,7 +163,7 @@ export default {
         });
     },
     onSignUp() {
-      const apiAgent = new ApiAgent("/api", "", false);
+      const apiAgent = new ApiAgent("/api");
       apiAgent
         ._post("/users/cardholders/onboard", {
           email: this.$route.query.email,
@@ -162,6 +174,7 @@ export default {
           this.token = body.cardholder.accessToken;
           this.cardholder = body.cardholder;
           this.isAuth = true;
+          this.fetchCardData();
         })
         .catch(err => {
           if (err.response) {

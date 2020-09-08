@@ -20,6 +20,7 @@ const routes = [
     }
   },
   {
+    name: "shared-card",
     path: "/shared/:cardToken",
     component: SharedCardPage
   },
