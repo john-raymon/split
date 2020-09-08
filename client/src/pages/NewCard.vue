@@ -136,6 +136,7 @@
           Cancel
         </button>
         <button
+          :disabled="loading"
           @click="handleCreateCardSubmit"
           type="submit"
           class="button--secondary flex-grow rounded-md self-end"
@@ -172,7 +173,8 @@ export default {
         suffix: "",
         precision: 2,
         masked: false /* doesn't work with directive */
-      }
+      },
+      loading: false
     };
   },
   computed: {
@@ -184,6 +186,7 @@ export default {
   methods: {
     ...mapActions(["fetchVirtualDebitCards"]),
     handleCreateCardSubmit() {
+      this.loading = true;
       this.$http
         ._post("/users/cards", {
           funding_token: this.fundingAccountToken,
@@ -205,6 +208,9 @@ export default {
             console.log("Error when attempting to add a funding bank account", err, err.response);
             return alert(JSON.stringify(err.response.data));
           }
+        })
+        .finally(() => {
+          this.loading = false;
         });
     }
   }

@@ -84,23 +84,33 @@
     </div>
     <div class="card-controls">
       <div class="flex items-center justify-between text-xs flex-row py-5">
-        <BaseSwitch
-          v-if="card.state !== 'CLOSED'"
-          @input="e => handleCardToggle(card.token, e)"
-          :toggled="card.state === 'OPEN'"
-          :disabled="loading"
-        >
-          <span class="text-gray-400">
-            On / Off
-          </span>
-        </BaseSwitch>
+        <div class="flex">
+          <BaseSwitch
+            v-if="card.state !== 'CLOSED'"
+            @input="e => handleCardToggle(card.token, e)"
+            :toggled="card.state === 'OPEN'"
+            :disabled="loading"
+          >
+            <span class="text-gray-400">
+              On / Off
+            </span>
+          </BaseSwitch>
+          <button v-if="$route.name !== 'shared-card'" @click="() => onShareCard(card.token)" class="capitalize flex items-center focus:outline-none text-xs focus:text-gray-600 hover:text-gray-500 text-gray-200 fill-current ml-4">
+           <svg class="w-4 h-4 mr-1" viewBox="0 0 352 448">
+              <path clip-rule="evenodd" d="M56 176C49.6348 176 43.5303 178.529 39.0294 183.029C34.5286 187.53 32 193.635 32 200V392C32 398.365 34.5286 404.47 39.0294 408.971C43.5303 413.471 49.6348 416 56 416H296C302.365 416 308.47 413.471 312.971 408.971C317.471 404.47 320 398.365 320 392V200C320 193.635 317.471 187.53 312.971 183.029C308.47 178.529 302.365 176 296 176H256C247.163 176 240 168.837 240 160C240 151.163 247.163 144 256 144H296C310.852 144 325.096 149.9 335.598 160.402C346.1 170.904 352 185.148 352 200V392C352 406.852 346.1 421.096 335.598 431.598C325.096 442.1 310.852 448 296 448H56C41.1479 448 26.9041 442.1 16.402 431.598C5.89998 421.096 0 406.852 0 392V200C0 185.148 5.89998 170.904 16.402 160.402C26.9041 149.9 41.1479 144 56 144H96C104.837 144 112 151.163 112 160C112 168.837 104.837 176 96 176H56Z" />
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M164.686 4.68629C170.935 -1.5621 181.065 -1.5621 187.314 4.68629L267.314 84.6863C273.562 90.9347 273.562 101.065 267.314 107.314C261.065 113.562 250.935 113.562 244.686 107.314L176 38.6274L107.314 107.314C101.065 113.562 90.9347 113.562 84.6863 107.314C78.4379 101.065 78.4379 90.9347 84.6863 84.6863L164.686 4.68629Z" />
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M176 0C184.837 0 192 7.16344 192 16V289C192 297.837 184.837 305 176 305C167.163 305 160 297.837 160 289V16C160 7.16344 167.163 0 176 0Z"/>
+            </svg>
+            share card
+          </button>
+        </div>
 
         <p v-if="card.state === 'CLOSED'" class="text-red-500">
           This card has been closed.
         </p>
 
         <router-link
-          v-if="$route.name !== 'manage-card'"
+          v-if="$route.name !== 'manage-card' && $route.name !== 'shared-card'"
           :to="`/dashboard/card/manage/${card.token}`"
           class="flex items-center"
         >
@@ -197,6 +207,32 @@ export default {
   },
   methods: {
     ...mapActions(["updateVirtualDebitCard"]),
+    onShareCard(cardToken) {
+      this.loading = true;
+      const recipientEmail = window.prompt("What is your recipient's email? They'll be emailed a link to this card and prompted to create a password.")
+      if (recipientEmail) {
+        this.$http
+          ._post("/users/share-card", {
+            cardToken,
+            recipientEmail,
+          }).then((body) => {
+            console.log('shared card', body);
+            this.$toast.success(
+              `Your card ending in ${this.card.last_four} has been shared with ${
+                recipientEmail
+              }`
+            );
+          })
+          .catch(() => {
+            this.$toast.error("There was an error while attempting to share your card.");
+          })
+          .finally(() => {
+            this.loading = false;
+          });
+      } else {
+        this.loading = false;
+      }
+    },
     handleCardToggle(cardToken, newSwitchState) {
       this.loading = true;
       const requestedCardState = newSwitchState ? "OPEN" : "PAUSED";

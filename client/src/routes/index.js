@@ -7,6 +7,7 @@ import HomePage from "@/pages/HomePage";
 import AddFundingAccount from "@/pages/AddFundingAccount";
 import ManageCard from "@/pages/ManageCard";
 import DashboardHomepage from "@/pages/DashboardHomepage";
+import SharedCardPage from "@/pages/SharedCardPage";
 import store from "@/vuex";
 
 const routes = [
@@ -17,6 +18,11 @@ const routes = [
     meta: {
       layout: "dark-layout"
     }
+  },
+  {
+    name: "shared-card",
+    path: "/shared/:cardToken",
+    component: SharedCardPage
   },
   {
     path: "/dashboard",
