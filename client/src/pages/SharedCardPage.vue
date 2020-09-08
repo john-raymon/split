@@ -2,9 +2,11 @@
   <div class="py-5 w-full flex items-center flex-col">
     <template v-if="isAuth">
       <!-- show card -->
-      <p>
-        LOGGED IN!!
-      </p>
+      <div class="w-full">
+        <div class="card-wrapper max-w-md mx-auto my-12">
+          <VirtualCard class="w-full" :card="card" />
+        </div>
+      </div>
     </template>
     <template v-else>
       <template v-if="step === 'PRE_CHECK'">
@@ -80,9 +82,13 @@
 </template>
 <script>
 import ApiAgent from "@/plugins/agents";
+import VirtualCard from "@/components/VirtualCard";
 
 export default {
   name: "SharedCardPage",
+  components: {
+    VirtualCard,
+  },
   data() {
     return {
       isAuth: false,
@@ -90,10 +96,27 @@ export default {
       token: null,
       step: "PRE_CHECK", // PRE_CHECK, SIGN_IN, SIGN_UP
       password: "",
-      newPassword: ""
+      newPassword: "",
+      card: {},
     };
   },
   methods: {
+    fetchCardData() {
+      // /users/cardholders/card?card_token=78e62b1a-4d83-453d-816f-1f84b3b06706
+      const apiAgent = new ApiAgent("/api", "", false, this.token);
+      apiAgent
+        ._get(`/users/cardholders/card?card_token=${this.$route.params.cardToken}`)
+        .then(body => {
+          debugger;
+          this.card = body.data[0];
+        })
+        .catch(err => {
+          if (err.response) {
+            console.log("Error when fetching secure card data.", err, err.response);
+            return alert(JSON.stringify(err.response.data));
+          }
+        });
+    },
     onContinue() {
       const apiAgent = new ApiAgent("/api", "", false);
       apiAgent

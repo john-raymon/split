@@ -11,6 +11,7 @@ const hostUrl = require('config').get('url');
 /**
  * models
  */
+const User = require('@/models/User');
 const AuthorizedCardholder = require('@/models/AuthorizedCardholder');
 const SharedCardRecord = require('@/models/SharedCardRecord');
 
@@ -23,6 +24,33 @@ const { authorizedCardholderPassport } = require('@/config/passport');
  * utils
  */
 const isBodyMissingProps = require('@/utils/isBodyMissingProps');
+
+router.get('/cardholders/card', middleware.requireACUser, function(req, res, next) {
+  // check if cardholder user has cardholder record with sharing as true, if so return
+  // card data, if not then return unauthorizedRequest
+  return SharedCardRecord.findOne({
+    authorizedCardholder: req.authACUser.id,
+    cardToken: req.query.card_token,
+    sharing: true,
+  }).then((record) => {
+    if (!record) {
+      return next({
+        name: "NotAllowed",
+        message: "The virtual card could not be located.",
+      })
+    }
+    return User.findById(record.user);
+  })
+  .then((user) => {
+    return privacyService.listVirtualDebitCards(
+      user.privacyAccountToken,
+      req.query,
+    )
+      .then(body => { return res.json(body); })
+      .catch(next);
+  })
+  .catch(next);
+});
 
 router.get('/cardholders/check', function(req, res, next) {
   return AuthorizedCardholder.findOne({ email: req.query.email })
