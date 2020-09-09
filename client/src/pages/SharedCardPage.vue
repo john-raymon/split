@@ -110,7 +110,7 @@ export default {
     this.logout();
   },
   computed: {
-    ...mapState(["userAuth"]),
+    ...mapState(["userAuth"])
   },
   methods: {
     ...mapActions(["logout"]),
