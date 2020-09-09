@@ -32,7 +32,8 @@ router.get('/cardholders/card', middleware.requireACUser, function(req, res, nex
     authorizedCardholder: req.authACUser.id,
     cardToken: req.query.card_token,
     sharing: true,
-  }).then((record) => {
+  })
+  .then((record) => {
     if (!record) {
       return next({
         name: "NotAllowed",
@@ -46,7 +47,7 @@ router.get('/cardholders/card', middleware.requireACUser, function(req, res, nex
       user.privacyAccountToken,
       req.query,
     )
-      .then(body => { return res.json(body); })
+      .then(body => { return res.json({ ...body, cardowner: user.firstName }) })
       .catch(next);
   })
   .catch(next);

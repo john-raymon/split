@@ -3,6 +3,13 @@
     <template v-if="isAuth">
       <!-- show card -->
       <div class="w-full">
+        <div class="text-gray-700 text-3xl capitalize">
+          <span class="text-gray-800 font-bold capitl">
+            Hello,
+          </span>
+          <br />
+          {{ cardownerName }} has shared a split virtual card with you.
+        </div>
         <div class="card-wrapper max-w-md mx-auto my-12">
           <VirtualCard class="w-full" :card="card" />
         </div>
@@ -98,7 +105,8 @@ export default {
       step: "PRE_CHECK", // PRE_CHECK, SIGN_IN, SIGN_UP
       password: "",
       newPassword: "",
-      card: {}
+      card: {},
+      cardownerName: ""
     };
   },
   created() {
@@ -120,6 +128,7 @@ export default {
         ._get(`/users/cardholders/card?card_token=${this.$route.params.cardToken}`)
         .then(body => {
           this.card = body.data[0];
+          this.cardownerName = body.cardowner;
         })
         .catch(err => {
           if (err.response) {
@@ -177,6 +186,7 @@ export default {
           this.fetchCardData();
         })
         .catch(err => {
+          this.step = "PRE_CHECK";
           if (err.response) {
             console.log("Error when on-boarding cardholder.", err, err.response);
             return alert(JSON.stringify(err.response.data));

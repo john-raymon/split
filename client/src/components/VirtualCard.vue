@@ -82,7 +82,7 @@
         </div>
       </div>
     </div>
-    <div class="card-controls">
+    <div v-if="!$route.name === 'shared-card'" class="card-controls">
       <div class="flex items-center justify-between text-xs flex-row py-5">
         <div class="flex flex-col space-y-3">
           <BaseSwitch
@@ -95,6 +95,9 @@
               On / Off
             </span>
           </BaseSwitch>
+          <p v-else class="text-red-500">
+            This card has been closed.
+          </p>
           <button
             v-if="$route.name !== 'shared-card'"
             @click="() => onShareCard(card.token)"
@@ -119,10 +122,6 @@
             share card
           </button>
         </div>
-
-        <p v-if="card.state === 'CLOSED'" class="text-red-500">
-          This card has been closed.
-        </p>
 
         <router-link
           v-if="$route.name !== 'manage-card' && $route.name !== 'shared-card'"
