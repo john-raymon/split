@@ -25,9 +25,10 @@ SharedCardRecordSchema.plugin(findOrCreate);
 
 SharedCardRecordSchema.methods.serialize = function() {
   return {
-    cardToken: this.id,
+    cardToken: this.cardToken,
     authorizedCardholder: this.authorizedCardholder.serialize(),
     cardOwner: this.user.serialize(),
+    sharing: this.sharing,
   };
 };
 

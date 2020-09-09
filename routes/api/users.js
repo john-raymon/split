@@ -32,7 +32,8 @@ router.get('/cardholders/card', middleware.requireACUser, function(req, res, nex
     authorizedCardholder: req.authACUser.id,
     cardToken: req.query.card_token,
     sharing: true,
-  }).then((record) => {
+  })
+  .then((record) => {
     if (!record) {
       return next({
         name: "NotAllowed",
@@ -46,7 +47,7 @@ router.get('/cardholders/card', middleware.requireACUser, function(req, res, nex
       user.privacyAccountToken,
       req.query,
     )
-      .then(body => { return res.json(body); })
+      .then(body => { return res.json({ ...body, cardowner: user.firstName }) })
       .catch(next);
   })
   .catch(next);
@@ -212,16 +213,25 @@ router.post('/share-card', middleware.requireAuthUser, async function(req, res, 
      * find or create shared-card record for the a-c user and explicitly
      * set sharing to true then send an email to the user
      */
-    SharedCardRecord.findOrCreate({
+    // const SharedCardholderFunction = SharedCardRecord[(req.query.revoke ? 'findOneAndUpdate' : 'findOrCreate'
+    SharedCardRecord[req.query.revoke ? 'findOneAndUpdate' : 'findOrCreate']({
       authorizedCardholder: acUser.id,
       cardToken,
       user: req.authUser.id,
-    }, { sharing: true }, async function(err, record) {
+    }, { sharing: req.query.revoke ? false : true }, async function(err, record) {
       if (err) {
         return next(err);
       };
+      if (!record) {
+        return next({
+          name: "BadRequest",
+        })
+      }
       await record.populate('authorizedCardholder').populate('user').execPopulate();
       const serializedSharedCardRecord = record.serialize();
+      if (req.query.revoke) {
+        return res.json({ success: true, sharedCardRecord: serializedSharedCardRecord });
+      }
       return mailgunService
         .sendSharedCardEmail(acUser.email, {
           customerName: 'there',
@@ -262,7 +272,18 @@ router.get('/cards', middleware.requireAuthUser, function(req, res, next) {
     req.authUser.privacyAccountToken,
     req.query,
   )
-    .then(body => { return res.json(body); })
+    .then(body => {
+      if (req.query.card_token) {
+        return SharedCardRecord.find({ cardToken: req.query.card_token, user: req.authUser.id })
+          .populate('user')
+          .populate('authorizedCardholder')
+          .exec()
+          .then((records) => {
+            return res.json({ ...body, cardholders: records.map((r) => r.serialize()) });
+          })
+      }
+      return res.json(body);
+    })
     .catch(next);
 })
 

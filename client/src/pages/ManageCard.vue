@@ -8,10 +8,35 @@
     </div>
     <div class="w-full" v-else>
       <div class="card-wrapper max-w-sm mx-auto my-12">
-        <VirtualCard :card.sync="card" />
+        <VirtualCard @shared-card="fetchCard" :card.sync="card" />
       </div>
+
       <div class="card-transactions-container max-w-sm mx-auto">
-        <p class="w-full text-lg my-4 pb-2 border-b-2 border-gray-200 text-gray-800">
+        <div class="cardholders-list" v-if="sharedCardholders.length > 0">
+          <p class="w-full text-lg my-2 pb-2 border-b border-gray-200 text-gray-800 mb-4">
+            Sharing with
+          </p>
+          <ul class="space-y-2">
+            <li v-for="cardholder in sharedCardholders" :key="cardholder.authorizedCardholder.id">
+              <div class="flex flex-row justify-between">
+                <p class="text-green-800 rounded-full py-1 text-xs focus:outline-none">
+                  {{ cardholder.authorizedCardholder.email }}
+                </p>
+                <button
+                  v-if="cardholder.sharing"
+                  @click="
+                    () =>
+                      onRevokeShareCard(cardholder.cardToken, cardholder.authorizedCardholder.email)
+                  "
+                  class="bg-green-400 text-green-800 capitalize rounded-full px-2 py-1 text-xs focus:outline-none"
+                >
+                  stop sharing
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <p class="w-full text-lg my-4 pb-2 border-b border-gray-200 text-gray-800">
           Card transactions
         </p>
         <table class="w-full">
@@ -47,7 +72,7 @@ import VirtualCard from "@/components/VirtualCard";
  * makes a PUT request to the back-end, updating a new virtual card
  */
 export default {
-  name: "NewCard",
+  name: "ManageCard",
   components: {
     VirtualCard
   },
@@ -56,7 +81,8 @@ export default {
       loading: true,
       card: {},
       error: null,
-      transactions: []
+      transactions: [],
+      cardholders: []
     };
   },
   beforeRouteLeave({ path }, from, next) {
@@ -89,9 +115,28 @@ export default {
     ...mapState(["fundingSources"]),
     enabledFundingSource() {
       return this.fundingSources.filter(account => account.state === "ENABLED");
+    },
+    sharedCardholders() {
+      return this.cardholders.filter(c => c.sharing);
     }
   },
   methods: {
+    onRevokeShareCard(cardToken, recipientEmail) {
+      this.$http
+        ._post("/users/share-card?revoke=true", {
+          cardToken,
+          recipientEmail
+        })
+        .then(() => {
+          this.$toast.success(
+            `You're no longer sharing your card ending in ${this.card.last_four} with ${recipientEmail}`
+          );
+          return this.fetchCard();
+        })
+        .catch(() => {
+          this.$toast.error("There was an error while unsharing your card.");
+        });
+    },
     fetchTransactions() {
       this.$http
         ._get(`/users/transactions?card_token=${this.$route.params.cardToken}`)
@@ -108,13 +153,13 @@ export default {
     },
     fetchCard() {
       this.error = null;
-      this.loading = true;
       return this.$http
         ._get(`/users/cards?card_token=${this.$route.params.cardToken}`)
         .then(body => {
           console.log(body);
           if (body.total_entries === 1) {
             this.card = body.data[0];
+            this.cardholders = body.cardholders;
           }
         })
         .catch(err => {
