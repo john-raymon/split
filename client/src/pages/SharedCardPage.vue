@@ -13,12 +13,12 @@
         </div>
       </div>
       <div v-else class="w-full">
-        <div class="text-gray-700 text-3xl capitalize">
-          <span class="text-gray-800 font-bold capitl">
+        <div class="text-gray-700 text-3xl">
+          <span class="text-gray-800 font-bold">
             Hello,
           </span>
           <br />
-          {{ cardownerName }} has shared a split virtual card with you.
+          {{ cardownerName }} has shared a virtual card with you.
         </div>
         <div class="card-wrapper max-w-md mx-auto my-12">
           <VirtualCard class="w-full" :card="card" />
