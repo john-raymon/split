@@ -82,7 +82,7 @@
         </div>
       </div>
     </div>
-    <div v-if="!$route.name === 'shared-card'" class="card-controls">
+    <div v-if="$route.name !== 'shared-card'" class="card-controls">
       <div class="flex items-center justify-between text-xs flex-row py-5">
         <div class="flex flex-col space-y-3">
           <BaseSwitch
