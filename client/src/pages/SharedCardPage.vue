@@ -2,7 +2,17 @@
   <div class="py-5 w-full flex items-center flex-col">
     <template v-if="isAuth">
       <!-- show card -->
-      <div class="w-full">
+      <div v-if="error" class="w-full">
+        <div class="text-gray-700 text-3xl">
+          <span class="text-gray-800 font-bold">
+            Oops,
+          </span>
+          <br />
+          we're unable to share this virtual card with you right now. Please reach out to the card
+          owner.
+        </div>
+      </div>
+      <div v-else class="w-full">
         <div class="text-gray-700 text-3xl capitalize">
           <span class="text-gray-800 font-bold capitl">
             Hello,
@@ -99,6 +109,7 @@ export default {
   },
   data() {
     return {
+      error: null,
       isAuth: false,
       cardholder: null,
       token: null,
@@ -131,10 +142,7 @@ export default {
           this.cardownerName = body.cardowner;
         })
         .catch(err => {
-          if (err.response) {
-            console.log("Error when fetching secure card data.", err, err.response);
-            return alert(JSON.stringify(err.response.data));
-          }
+          this.error = err.response;
         });
     },
     onContinue() {
