@@ -125,7 +125,7 @@
           </form>
         </div>
 
-        <video preload="auto" playsinline id="video" class="w-100 h-auto" loop>
+        <video preload="auto" playsinline id="video" class="w-100 h-auto">
           <source src="@/assets/media/video.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
