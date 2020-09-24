@@ -5,6 +5,7 @@ import router from "./routes";
 import globalComponentInstaller from "@/plugins/globalComponentInstaller";
 import DefaultLayout from "@/layout/DefaultLayout";
 import DarkLayout from "@/layout/DarkLayout";
+import LandingPageLayout from "@/layout/LandingPageLayout.vue";
 import ApiAgent from "@/plugins/agents";
 import store from "@/vuex";
 import Moment from "vue-moment";
@@ -21,7 +22,8 @@ Vue.use(Moment);
 Vue.use(globalComponentInstaller, {
   components: [
     ["default-layout", DefaultLayout],
-    ["dark-layout", DarkLayout]
+    ["dark-layout", DarkLayout],
+    ["landing-page-layout", LandingPageLayout]
   ]
 });
 
