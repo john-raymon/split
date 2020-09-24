@@ -125,7 +125,7 @@
           </form>
         </div>
 
-        <video preload="auto" playsinline id="video" class="w-100 h-auto">
+        <video @click="handleVideoClick" ref="video-player" reload="auto" playsinline id="video" class="w-100 h-auto">
           <source src="@/assets/media/video.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -142,10 +142,19 @@ export default {
       recipientEmail: ""
     };
   },
+  mounted() {
+    this.$refs['video-player'].addEventListener('ended', () => {
+      this.hidePlay = false;
+    })
+  },
   methods: {
     handlePlay() {
       this.hidePlay = true;
-      document.getElementById("video").play();
+      this.$refs['video-player'].play();
+    },
+    handleVideoClick() {
+      this.hidePlay = false;
+      this.$refs['video-player'].pause();
     },
     handleFormSubmit() {
       this.$http
