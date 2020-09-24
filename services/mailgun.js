@@ -12,6 +12,16 @@ const domain = config.get('mailgun.domain');
 const mailgun = require("mailgun-js")({apiKey, domain});
 
 module.exports = {
+  sendLandingPageEmail(to) {
+    const data = {
+      from: 'Transact Labs - <info@transactlabs.io>',
+      to,
+      subject: "You\'re on the waiting list!",
+      template: 'waiting-list',
+    };
+
+    return mailgun.messages().send(data).then(body => { debugger; return body; }).catch(err => { throw err; });
+  },
   sendWelcomeEmail(to, subject, customerName) {
     const data = {
       from: 'Split - Virtual debit cards <example@example.com>',

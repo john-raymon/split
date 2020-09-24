@@ -25,6 +25,19 @@ const { authorizedCardholderPassport } = require('@/config/passport');
  */
 const isBodyMissingProps = require('@/utils/isBodyMissingProps');
 
+router.post('/waiting-list/sign-up', function(req, res, next) {
+  return mailgunService.sendLandingPageEmail(req.body.to)
+  .then((body) => {
+    return res.json({ success: true, ...body});
+  })
+  .catch((err) => {
+    return next({
+      name: 'BadRequest',
+      message: JSON.stringify(err),
+    })
+  })
+});
+
 router.get('/cardholders/card', middleware.requireACUser, function(req, res, next) {
   // check if cardholder user has cardholder record with sharing as true, if so return
   // card data, if not then return unauthorizedRequest
