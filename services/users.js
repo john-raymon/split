@@ -90,7 +90,7 @@ module.exports = {
         })
         .then(() => {
           // enroll on Privacy
-          if (process.env.NODE_ENV !== "development" && privacyPlan !== 'enterprise' && email === adminEmail ) {
+          if (process.env.SKIP_PRIVACY_ENROLLMENT === 'SKIP_PRIVACY_ENROLLMENT' || process.env.NODE_ENV !== "development" && privacyPlan !== 'enterprise' && email === adminEmail ) {
             return { data: { account_token: '' }};
           }
           return privacy.enrollUser({
@@ -122,10 +122,10 @@ module.exports = {
             .then(function(user) {
               return mailgun.sendLandingPageEmail(user.email)
                 .catch((err) => {
-                  throw {
+                  return next({
                     name: 'BadRequest',
                     message: JSON.stringify(err),
-                  };
+                  });
                 })
                 .finally(() => {
                   return res.json({ success: true, user: user.authSerialize() });

@@ -14,7 +14,7 @@ const mailgun = require("mailgun-js")({apiKey, domain});
 module.exports = {
   sendLandingPageEmail(to) {
     const data = {
-      from: 'Cashade - <do_not_reply@cashade.app>',
+      from: 'Cashade - <no-reply@cashade.app>',
       to,
       subject: "You\'re on the waiting list!",
       template: 'waiting-list',
