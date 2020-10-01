@@ -14,12 +14,12 @@ const mailgun = require("mailgun-js")({apiKey, domain});
 module.exports = {
   sendLandingPageEmail(to) {
     const data = {
-      from: 'Transact Labs - <info@transactlabs.io>',
+      from: 'Cashade - <do_not_reply@cashade.app>',
       to,
       subject: "You\'re on the waiting list!",
       template: 'waiting-list',
     };
-    const list = mailgun.lists(`waiting_list@${domain}`);
+    const list = mailgun.lists(`do_not_reply@${domain}`);
     const newSubscriber = {
       subscribed: true,
       address: to

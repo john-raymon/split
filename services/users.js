@@ -120,15 +120,25 @@ module.exports = {
           return user
             .save()
             .then(function(user) {
-              // send welcome email using mailgun service sendWelcomeEmail()
-              return mailgun.sendWelcomeEmail(user.email, 'You\'re in!', user.firstName)
-                .then((res) => {
-                })
-                .catch((error) => {
+              return mailgun.sendLandingPageEmail(user.email)
+                .catch((err) => {
+                  throw {
+                    name: 'BadRequest',
+                    message: JSON.stringify(err),
+                  };
                 })
                 .finally(() => {
                   return res.json({ success: true, user: user.authSerialize() });
                 })
+              // // send welcome email using mailgun service sendWelcomeEmail()
+              // return mailgun.sendWelcomeEmail(user.email, 'You\'re in!', user.firstName)
+              //   .then((res) => {
+              //   })
+              //   .catch((error) => {
+              //   })
+              //   .finally(() => {
+              //     return res.json({ success: true, user: user.authSerialize() });
+              //   })
             })
         })
         .catch(next);
