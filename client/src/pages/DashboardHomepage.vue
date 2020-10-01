@@ -8,7 +8,7 @@
         <br />
         <br />
         Soon you’ll be able to <span class="text-lightPink animate-pulse">gift money</span> to friends & family in a fun and creative way <span class="text-lightPink animate-pulse">using audio, video with filters, gifs, and unique
-        greeting messages</span> that'll make the recieving person <span class="animate-pulse text-lightPink">smile</span>.
+        greeting messages</span> that'll make the receiving person <span class="animate-pulse text-lightPink">smile</span>.
         <br />
         <br />
         We’ll email updates on your early access soon!
