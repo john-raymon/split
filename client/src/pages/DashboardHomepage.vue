@@ -2,16 +2,21 @@
   <div class="w-full">
     <div v-if="!userAuth.earlyAccess" class="pre-dashboard">
       <p
-        class="font-mont font-bold max-w-lg font-medium text-indigo-900 text-lg md:text-2xl text-left py-10"
+        class="font-mont max-w-lg font-normal text-indigo-900 text-lg md:text-2xl text-left py-10"
       >
-        You’re in! Welcome to your Split dashboard.
+        You’re in! Welcome to <span class="text-lightPink animate-pulse">Cashade.</span>
         <br />
         <br />
-        Soon you’ll be able to create up to 5 virtual debit cards linked to your bank account or
-        debit card.
+        Soon you’ll be able to <span class="text-lightPink animate-pulse">gift money</span> to friends & family in a fun and creative way <span class="text-lightPink animate-pulse">using audio, video with filters, gifs, and unique
+        greeting messages</span> that'll make the recieving person <span class="animate-pulse text-lightPink">smile</span>.
         <br />
         <br />
-        We’ll email updates on your early access soon.
+        We’ll email updates on your early access soon!
+        <br />
+        <br />
+        Thanks again
+        <br/>
+        - Cashade
       </p>
     </div>
     <div v-else class="dashboard">

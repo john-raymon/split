@@ -1,6 +1,6 @@
 <template>
   <div class="default-layout px-5 sm:px-8">
-    <header class="w-full pt-20 flex flex-col border-b border-gray-200 pb-8">
+    <header class="w-full pt-20 flex flex-col border-b border-gray-200 pb-8 px-6 max-w-screen-lg mx-auto">
       <router-link to="/" class="w-24 h-auto">
         <Logo />
       </router-link>
@@ -14,11 +14,11 @@
         </router-link>
         <ul class="text-xs text-right text-gray-500 tracking-widest">
           <template v-if="userAuth.isAuth">
-            <li>
+            <!-- <li>
               <router-link to="">
                 Account Settings
               </router-link>
-            </li>
+            </li> -->
             <li>
               <a href="" @click.prevent="$emit('log-out')">
                 Sign out
@@ -40,7 +40,7 @@
         </ul>
       </div>
     </header>
-    <main class="main">
+    <main class="main px-6">
       <slot />
     </main>
     <footer class="w-full flex justify-center text-gray-800 text-xs tracking-widest py-6">
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import Logo from "@/assets/svgs/logo.svg";
+import Logo from "@/assets/svgs/cashade-logo.svg";
 
 export default {
   name: "DefaultLayout",

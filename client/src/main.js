@@ -6,6 +6,7 @@ import globalComponentInstaller from "@/plugins/globalComponentInstaller";
 import DefaultLayout from "@/layout/DefaultLayout";
 import DarkLayout from "@/layout/DarkLayout";
 import LandingPageLayout from "@/layout/LandingPageLayout.vue";
+import CashadeDarkLayout from "@/layout/CashadeDarkLayout.vue";
 import ApiAgent from "@/plugins/agents";
 import store from "@/vuex";
 import Moment from "vue-moment";
@@ -23,7 +24,8 @@ Vue.use(globalComponentInstaller, {
   components: [
     ["default-layout", DefaultLayout],
     ["dark-layout", DarkLayout],
-    ["landing-page-layout", LandingPageLayout]
+    ["landing-page-layout", LandingPageLayout],
+    ["cashade-dark-layout", CashadeDarkLayout],
   ]
 });
 

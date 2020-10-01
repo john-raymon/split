@@ -15,7 +15,7 @@ export default new Vuex.Store({
     userAuth: {
       isAuth: false,
       user: null,
-      earlyAccess: true
+      earlyAccess: false
     },
     fundingSources: [],
     virtualDebitCards: {
@@ -37,7 +37,7 @@ export default new Vuex.Store({
       state.userAuth = {
         isAuth: false,
         user: null,
-        earlyAccess: true
+        earlyAccess: false
       };
     },
     setFundingSources(state, fundingSources) {

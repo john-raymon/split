@@ -36,14 +36,6 @@ module.exports = {
         ['firstName', 'Your first name is required.'],
         ['password', 'A password is required'],
         ['lastName', 'Your last name is required'],
-        ['billingAddressLine', 'You must provide your billing street address.'],
-        ['billingCity', 'You must provide your billing city.'],
-        ['billingState', 'You must provide your billing state.'],
-        ['billingPostalCode', 'You must provide your billing postal code.'],
-        ['billingCountry', 'You must provide your billing country.'],
-        ['phoneNumber', 'You must provide a phone number.'],
-        ['dob', 'You must provide your date of birth in the format yyyy-mm-dd.', true],
-        ['socialLastFour', 'You must provide the last four of your social', true],
       ];
 
       const { hasMissingProps, propErrors } = isBodyMissingProps(

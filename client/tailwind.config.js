@@ -26,7 +26,11 @@ module.exports = {
         xl: "1.5rem",
         full: "9999px",
         ...uiLibraryTailwindConfig.theme.extend.borderRadius
-      }
+      },
+      colors: {
+        lightPink: '#FC8181',
+        darkPink: '#814040',
+      },
     }
   },
   variants: {
