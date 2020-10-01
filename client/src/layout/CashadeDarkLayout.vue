@@ -1,6 +1,6 @@
 <template>
-  <div class="dark-layout">
-    <section class="dark-layout__inner">
+  <div class="cashade-dark-layout">
+    <section class="cashade dark-layout__inner">
       <header class="w-full py-16 flex items-center justify-between px-6 max-w-screen-lg mx-auto">
         <router-link to="/" class="w-24 h-auto">
           <Logo />
@@ -23,9 +23,8 @@
       <main class="main px-6">
         <slot />
       </main>
-      <footer class="relative w-full bg-black h-56">
-
-      </footer>
+      <!-- <footer class="relative w-full bg-white h-56">
+      </footer> -->
     </section>
   </div>
 </template>
@@ -34,21 +33,21 @@
 import Logo from "@/assets/svgs/cashade-logo.svg";
 
 export default {
-  name: "DarkLayout",
+  name: "CashadeDarkLayout",
   components: {
     Logo
   }
 };
 </script>
-<style lang="scss" scoped="true">
-.dark-layout {
+<style lang="scss">
+.cashade-dark-layout {
   @apply relative font-mont w-full bg-black;
   &__inner {
     @apply w-full;
   }
   .main {
-    @apply relative flex h-auto;
-    min-height: calc(100vh - 14rem); // 14rem is the height of the footer in this layout
+    @apply flex h-auto;
+    min-height: 80vh; // calc(100vh - 14rem); // 14rem is the height of the footer in this layout
   }
 }
 </style>

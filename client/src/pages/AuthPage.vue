@@ -29,8 +29,6 @@
           v-model="password"
         />
 
-        <input type="text" class="text-field" name="dob" placeholder="yyyy-mm-dd" v-model="dob" />
-
         <button type="submit" class="button w-full" @click="onSubmit">
           Create Account
         </button>

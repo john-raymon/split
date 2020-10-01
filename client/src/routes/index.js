@@ -16,7 +16,7 @@ const routes = [
     path: "/",
     component: HomePage,
     meta: {
-      layout: "landing-page-layout"
+      layout: "cashade-dark-layout"
     }
   },
   {
