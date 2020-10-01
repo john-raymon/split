@@ -16,7 +16,11 @@ const app = express();
 
 // Set up Mongodb
 if (isProduction) {
-  mongoose.connect(mongodbUri);
+  mongoose.connect(mongodbUri)
+    .catch((error) => {
+      console.log("Mongodb crashed ERROR:", error);
+      return res.status(503).json({ error: 'Sorry, we\'re experiencing issues with our server, please try again later.'})
+    });
 } else {
   mongoose
     .connect(mongodbUri, { useUnifiedTopology: true, useNewUrlParser: true })
